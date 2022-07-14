@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace FavouriteMons.Areas.Identity.Pages.Account
 {
@@ -83,6 +84,12 @@ namespace FavouriteMons.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    // Creating the security context
+                    var claims = new List<Claim> {
+                        new Claim("Id", "")
+                    };
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
