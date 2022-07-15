@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FavouriteMons.Areas.Identity.Data;
 using FavouriteMons.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace FavouriteMons.Controllers
 {
+    [Authorize]
     public class TeamsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -48,12 +52,12 @@ namespace FavouriteMons.Controllers
         // GET: Teams/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             return View();
         }
 
         // POST: Teams/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserId,CreatedAt,Monsters")] Teams teams)
@@ -85,8 +89,6 @@ namespace FavouriteMons.Controllers
         }
 
         // POST: Teams/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,UserId,CreatedAt,Monsters")] Teams teams)

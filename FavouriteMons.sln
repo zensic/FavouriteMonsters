@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FavouriteMons", "FavouriteMons\FavouriteMons.csproj", "{A2F09728-CB16-44A1-9784-EA3A56B8AB03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FavouriteMons", "FavouriteMons\FavouriteMons.csproj", "{A2F09728-CB16-44A1-9784-EA3A56B8AB03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
