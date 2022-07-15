@@ -6,13 +6,13 @@ namespace FavouriteMons.Models
     public class Teams
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Users")]
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public string Monsters { get; set; }
+        public string Pokemon { get; set; }
     }
 }
