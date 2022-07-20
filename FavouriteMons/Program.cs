@@ -12,13 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         string connectionString;
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
 
-        if (env == "Development")
+        if (env == "Production")
         {
-            connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
-        }
-        else
-        {
-            // Use heroku config vars
             var connUser = Environment.GetEnvironmentVariable("USERNAME");
             var connPass = Environment.GetEnvironmentVariable("PASSWORD");
             var connHost = Environment.GetEnvironmentVariable("HOST");
@@ -26,11 +21,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
             connectionString = $"server={connHost};Uid={connUser};Pwd={connPass};Database={connDb}";
         }
+        else
+        {
+            connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+        }
 
         options.UseMySql(connectionString, serverVersion);
     });
 
-// Add identity
+// Add identity service
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.User.RequireUniqueEmail = true;
@@ -41,25 +40,33 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
    opt.TokenLifespan = TimeSpan.FromHours(2));
 
-// Add mailkit 
-var emailConfig = builder.Configuration
-    .GetSection("EmailConfiguration")
-    .Get<EmailConfiguration>();
-builder.Services.AddSingleton(emailConfig);
-//builder.Services.AddSingleton(() => {
-//    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+// Add mailkit service
+builder.Services.AddSingleton(() =>
+{
+    EmailConfiguration emailConfig;
+    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-//    if (env == "Development")
-//    {
-//        var emailConfig = builder.Configuration
-//            .GetSection("EmailConfiguration")
-//            .Get<EmailConfiguration>();
-//    }
+    // If production environment, grab username + password from heroku config vars
+    if (env == "Production")
+    {
+        var mailFrom = Environment.GetEnvironmentVariable("MAIL_FROM");
+        var mailSmtpServer = Environment.GetEnvironmentVariable("MAIL_STMPSERVER");
+        var mailPort = Environment.GetEnvironmentVariable("MAIL_PORT");
+        var mailUsername = Environment.GetEnvironmentVariable("MAIL_USERNAME");
+        var mailPassword = Environment.GetEnvironmentVariable("MAIL_PASSWORD");
 
-//    EmailConfiguration emailConfiguration = new EmailConfiguration();
+        emailConfig = new EmailConfiguration(mailFrom, mailSmtpServer, int.Parse(mailPort), mailUsername, mailPassword);
 
-//    return emailConfiguration;
-//});
+        return emailConfig;
+    }
+
+    // If development environment, grab username + password from local appsettings config
+    emailConfig = builder.Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+
+    return emailConfig;
+});
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // Add MVC and razor pages
