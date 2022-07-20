@@ -56,7 +56,7 @@ namespace FavouriteMons.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                var message = new Message(new string[] { user.Email }, "Reset password token", callbackUrl, null);
+                var message = new Message(new string[] { user.Email }, "Reset Your Favourite Monsters Password", callbackUrl, null);
                 await _emailSender.SendEmailAsync(message);
                 //await _emailSender.SendEmailAsync(
                 //    Input.Email,

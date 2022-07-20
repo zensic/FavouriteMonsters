@@ -38,7 +38,7 @@ namespace EmailService
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
 
-            var bodyBuilder = new BodyBuilder { HtmlBody = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
+            var bodyBuilder = new BodyBuilder { HtmlBody = string.Format("<div><h2 style='text-align:center;'>Forgot your password?</h2><p style='text-align:center;color:gray;'>That's fine, it happens! Click on the link below to reset your password</p><p style='text-align:center;'>{0}</p></div>", message.Content) };
 
             if (message.Attachments != null && message.Attachments.Any())
             {

@@ -6,7 +6,7 @@ using EmailService;
 var builder = WebApplication.CreateBuilder(args);
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-// If the environment variable specifies production, use connection string stored in heroku secret
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     string connectionString;
@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
     if (env == "Production")
     {
+        // If the production environment, use connection string in heroku config vars
         var connUser = Environment.GetEnvironmentVariable("USERNAME");
         var connPass = Environment.GetEnvironmentVariable("PASSWORD");
         var connHost = Environment.GetEnvironmentVariable("HOST");
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     }
     else
     {
+        // If development environment, use connection string in appsettings config
         connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
     }
 
@@ -45,6 +47,7 @@ EmailConfiguration emailConfig;
 
 if (env == "Production")
 {
+    // If production environment, grab username + password from heroku config vars
     var mailFrom = Environment.GetEnvironmentVariable("MAIL_FROM");
     var mailSmtpServer = Environment.GetEnvironmentVariable("MAIL_STMPSERVER");
     var mailPort = Environment.GetEnvironmentVariable("MAIL_PORT");
@@ -55,6 +58,7 @@ if (env == "Production")
 }
 else
 {
+    // If development environment, grab username + password from local appsettings config
     emailConfig = builder.Configuration
     .GetSection("EmailConfiguration")
     .Get<EmailConfiguration>();
