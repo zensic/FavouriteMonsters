@@ -50,8 +50,8 @@ if (env == "Production")
     Console.WriteLine("Program Break 1");
     var mailFrom = Environment.GetEnvironmentVariable("MAIL_USERNAME");
     var mailSmtpServer = Environment.GetEnvironmentVariable("MAIL_STMPSERVER");
-    var mailPort = Environment.GetEnvironmentVariable("MAIL_USERNAME");
-    var mailUsername = Environment.GetEnvironmentVariable("USERNAME");
+    var mailPort = Environment.GetEnvironmentVariable("MAIL_PORT");
+    var mailUsername = Environment.GetEnvironmentVariable("MAIL_USERNAME");
     var mailPassword = Environment.GetEnvironmentVariable("MAIL_PASSWORD");
 
     emailConfig = new EmailConfiguration(mailFrom, mailSmtpServer, int.Parse(mailPort), mailUsername, mailPassword);
