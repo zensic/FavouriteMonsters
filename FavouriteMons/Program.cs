@@ -14,9 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     if (env == "Production")
     {
         // If the production environment, use connection string in heroku config vars
-        var connUser = Environment.GetEnvironmentVariable("USERNAME");
-        var connPass = Environment.GetEnvironmentVariable("PASSWORD");
-        var connHost = Environment.GetEnvironmentVariable("HOST");
+        var connUser = Environment.GetEnvironmentVariable("DB_USERNAME");
+        var connPass = Environment.GetEnvironmentVariable("DB_PASSWORD");
+        var connHost = Environment.GetEnvironmentVariable("DB_HOST");
         var connDb = Environment.GetEnvironmentVariable("DATABASE");
 
         connectionString = $"server={connHost};Uid={connUser};Pwd={connPass};Database={connDb}";
