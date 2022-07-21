@@ -47,8 +47,7 @@ EmailConfiguration emailConfig;
 if (env == "Production")
 {
     // If production environment, grab username + password from heroku config vars
-    Console.WriteLine("Program Break 1");
-    var mailFrom = Environment.GetEnvironmentVariable("MAIL_USERNAME");
+    var mailFrom = Environment.GetEnvironmentVariable("MAIL_FROM");
     var mailSmtpServer = Environment.GetEnvironmentVariable("MAIL_STMPSERVER");
     var mailPort = Environment.GetEnvironmentVariable("MAIL_PORT");
     var mailUsername = Environment.GetEnvironmentVariable("MAIL_USERNAME");
@@ -59,7 +58,6 @@ if (env == "Production")
 else
 {
     // If development environment, grab username + password from local appsettings config
-    Console.WriteLine("Program Break 2");
     emailConfig = builder.Configuration
     .GetSection("EmailConfiguration")
     .Get<EmailConfiguration>();

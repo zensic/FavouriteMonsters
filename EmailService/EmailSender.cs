@@ -26,27 +26,21 @@ namespace EmailService
 
         public async Task SendEmailAsync(Message message)
         {
-            Console.WriteLine("Email Sender break 1");
             var mailMessage = CreateEmailMessage(message);
 
-            Console.WriteLine("Email Sender break 6");
             await SendAsync(mailMessage);
 
-            Console.WriteLine("Email Sender break 14");
         }
 
         private MimeMessage CreateEmailMessage(Message message)
         {
-            Console.WriteLine("Email Sender break 2");
             var emailMessage = new MimeMessage();
             emailMessage.From.Add(new MailboxAddress("email", _emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
 
-            Console.WriteLine("Email Sender break 3");
             var bodyBuilder = new BodyBuilder { HtmlBody = string.Format("<div><h2 style='text-align:center;'>Forgot your password?</h2><p style='text-align:center;color:gray;'>That's fine, it happens! Click on the link below to reset your password</p><p style='text-align:center;'>{0}</p></div>", message.Content) };
 
-            Console.WriteLine("Email Sender break 4");
             if (message.Attachments != null && message.Attachments.Any())
             {
                 byte[] fileBytes;
@@ -62,7 +56,6 @@ namespace EmailService
                 }
             }
 
-            Console.WriteLine("Email Sender break 5");
             emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;
         }
@@ -102,12 +95,9 @@ namespace EmailService
                     await client.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
                     Console.WriteLine("Email Sender break 8");
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    Console.WriteLine("Email Sender break 9");
                     await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);
-                    Console.WriteLine("Email Sender break 10");
 
                     await client.SendAsync(mailMessage);
-                    Console.WriteLine("Email Sender break 11");
                 }
                 catch
                 {
