@@ -6,7 +6,6 @@ using EmailService;
 var builder = WebApplication.CreateBuilder(args);
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     string connectionString;
