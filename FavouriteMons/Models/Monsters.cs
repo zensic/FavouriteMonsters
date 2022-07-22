@@ -1,6 +1,6 @@
 ﻿namespace FavouriteMons.Models
 {
-    public class Monster
+    public class Monsters
     {
     }
 }

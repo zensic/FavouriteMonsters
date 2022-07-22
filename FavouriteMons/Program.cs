@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using FavouriteMons.Areas.Identity.Data;
 using EmailService;
+using FavouriteMons.DataAccess;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -42,6 +44,26 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
    opt.TokenLifespan = TimeSpan.FromHours(2));
 
+// Allows any origin, header, methods
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("OpenCorsPolicy", options =>
+        options.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
+// Add rest api service (Refit)
+string apiServer = "https://localhost:44320/api";
+
+if (env == "Production")
+    apiServer = Environment.GetEnvironmentVariable("API_HOST");
+
+builder.Services.AddRefitClient<IMonsterData>().ConfigureHttpClient(c =>
+{
+    c.BaseAddress = new Uri(apiServer);
+});
+
 // Add mailkit service
 EmailConfiguration emailConfig;
 
@@ -66,15 +88,6 @@ else
 
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-
-// Allows any origin, header, methods
-builder.Services.AddCors(policy =>
-{
-    policy.AddPolicy("OpenCorsPolicy", options =>
-        options.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod());
-});
 
 // Add MVC and razor pages
 builder.Services.AddControllersWithViews();

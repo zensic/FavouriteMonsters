@@ -41,17 +41,13 @@ namespace FavouriteMons.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine("Forget Password break 1");
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                Console.WriteLine("Forget Password break 2");
                 if (user == null)
                 {
                     Console.WriteLine("Email is not confirmed");
                     return RedirectToPage("./ForgotPasswordConfirmation");
                 }
-                Console.WriteLine("Forget Password break 3");
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                Console.WriteLine("Forget Password break 4");
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Page(
                     "/Account/ResetPassword",
@@ -60,9 +56,7 @@ namespace FavouriteMons.Areas.Identity.Pages.Account
                     protocol: "https");
 
                 var message = new Message(new string[] { user.Email }, "Reset Your Favourite Monsters Password", callbackUrl, null);
-                Console.WriteLine("Forget Password break 5");
                 await _emailSender.SendEmailAsync(message);
-                Console.WriteLine("Forget Password break 6");
                 //await _emailSender.SendEmailAsync(
                 //    Input.Email,
                 //    "Reset Password",
