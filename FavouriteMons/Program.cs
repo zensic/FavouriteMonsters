@@ -6,6 +6,7 @@ using EmailService;
 var builder = WebApplication.CreateBuilder(args);
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
+// Add MySQL DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     string connectionString;
@@ -66,6 +67,15 @@ else
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+// Allows any origin, header, methods
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("OpenCorsPolicy", options =>
+        options.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
 // Add MVC and razor pages
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -81,6 +91,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("OpenCorsPolicy");
 app.UseStaticFiles();
 
 app.UseRouting();

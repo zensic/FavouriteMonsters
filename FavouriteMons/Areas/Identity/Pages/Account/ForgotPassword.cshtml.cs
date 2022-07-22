@@ -57,7 +57,7 @@ namespace FavouriteMons.Areas.Identity.Pages.Account
                     "/Account/ResetPassword",
                     pageHandler: null,
                     values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
+                    protocol: "https");
 
                 var message = new Message(new string[] { user.Email }, "Reset Your Favourite Monsters Password", callbackUrl, null);
                 Console.WriteLine("Forget Password break 5");
