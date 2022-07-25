@@ -3,7 +3,7 @@ using Refit;
 
 namespace FavouriteMons.DataAccess
 {
-    public interface IMonsterData
+    public interface IMonstersData
     {
         [Get("/Monsters")]
         Task<List<Monsters>> GetMonsters();

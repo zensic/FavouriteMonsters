@@ -1,0 +1,13 @@
+﻿@model IEnumerable<FavouriteMons.Models.Monsters>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul>
+    @foreach (var monster in Model)
+    {
+        <li>@monster.Id @monster.Name @monster.Element @monster.ImageUrl</li>
+    }
+</ul>

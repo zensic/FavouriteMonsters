@@ -59,7 +59,7 @@ string apiServer = "https://localhost:44320/api";
 if (env == "Production")
     apiServer = Environment.GetEnvironmentVariable("API_HOST");
 
-builder.Services.AddRefitClient<IMonsterData>().ConfigureHttpClient(c =>
+builder.Services.AddRefitClient<IMonstersData>().ConfigureHttpClient(c =>
 {
     c.BaseAddress = new Uri(apiServer);
 });
