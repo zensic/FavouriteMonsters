@@ -89,6 +89,15 @@ else
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
+// Add Cloudinary services
+if (env == "Production")
+{
+    var cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_NAME");
+    var apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_KEY");
+    var apiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_SECRET");
+}
+
+
 // Add MVC and razor pages
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
