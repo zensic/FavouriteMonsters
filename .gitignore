@@ -4,9 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Hide appsettings
-/FavouriteMons/appsettings.json
-/FavouriteMons/appsettings.Development.json
-/FavouriteMons/appsettings.Production.json
+FavouriteMons/appsettings.json
+FavouriteMons/appsettings.Development.json
+FavouriteMons/appsettings.Production.json
 
 # User-specific files
 *.rsuser
