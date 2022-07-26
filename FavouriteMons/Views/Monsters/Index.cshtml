@@ -5,9 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<ul>
-    @foreach (var monster in Model)
-    {
-        <li>@monster.Id @monster.Name @monster.Element @monster.ImageUrl</li>
-    }
-</ul>
+<div class="container red">
+    <div class="row
+    row-cols-sm-2
+    row-cols-md-4
+    ">
+        <button class="col pokemon" style="
+            justify-content: center;
+            background-color: lightgreen;
+            border: none
+        ">
+            Add
+        </button>
+        @foreach (var monster in Model)
+        {
+            <div class="col pokemon">
+                <img src=@monster.ImageUrl />
+                <div>
+                    <strong>@monster.Name</strong>
+                </div>
+                <div>@monster.Element</div>
+            </div>
+        }
+    </div>
+</div>

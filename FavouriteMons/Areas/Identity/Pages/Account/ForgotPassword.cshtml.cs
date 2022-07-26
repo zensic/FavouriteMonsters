@@ -62,6 +62,8 @@ namespace FavouriteMons.Areas.Identity.Pages.Account
                 //    "Reset Password",
                 //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                // TODO: Save hashed token + email to database and set token expiry time
+
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 
