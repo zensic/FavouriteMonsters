@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -17,10 +18,12 @@ namespace FavouriteMons.Areas.Identity.Pages.Account
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        public string UserId;
 
         public ResetPasswordModel(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
+            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         [BindProperty]
