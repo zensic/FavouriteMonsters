@@ -9,14 +9,48 @@
 <hr />
 <div class="row">
     <form asp-action="Create">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <label asp-for="Element" class="control-label"></label>
-        <input asp-for="Element" class="form-control" />
-        <div>
-            <input id="fileupload" type="file" name="images" multiple accept="image/gif, image/jpeg, image/png">
+        <div class="new-monster-con">
+            <div class="new-monster-img-con">
+                <img id="new-monster-image" src="~/images/no_image_square.jpg" class="new-monster-img" alt="Monster Image" />
+                <label class="btn btn-success w-100">
+                    <input id="fileupload" type="file" name="images" accept="image/gif, image/jpeg, image/png">
+                    Upload Monster Image
+                </label>
+            </div>
+            <div>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <label asp-for="Element" class="control-label"></label>
+                <select asp-for="Element" class="form-control" asp-items="@ViewBag.types"></select>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
         </div>
 
-        <input type="submit" value="Create" class="btn btn-primary" />
+
     </form>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Grabs file from file upload input, populates it into img component 
+        const readURL = input => {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = e => {
+                    $('#new-monster-image').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Listens to changes from file upload file
+        $("#fileupload").change(function() {
+            readURL(this);
+        });
+    </script>
+}

@@ -2,6 +2,7 @@
 using FavouriteMons.DataAccess;
 using FavouriteMons.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FavouriteMons.Controllers
 {
@@ -30,6 +31,15 @@ namespace FavouriteMons.Controllers
 
         public async Task<IActionResult> Create()
         {
+            List<SelectListItem> types = new List<SelectListItem>()
+            {
+                new SelectListItem("Fire", "0", true),
+                new SelectListItem("Grass", "1"),
+                new SelectListItem("Water", "2")
+            };
+
+            ViewBag.types = types;
+
             return View();
         }
 

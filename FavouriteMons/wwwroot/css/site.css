@@ -1,3 +1,7 @@
+:root {
+    --borderRadius: 12px;
+}
+
 html {
     font-size: 14px;
 }
@@ -21,17 +25,43 @@ body {
     background-color: red;
 }
 
+/* Monsters view */
+
 .pokemon {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 240px;
     padding: 1rem;
-    border-radius: 12px;
+    border-radius: var(--borderRadius);
     background-color: yellow;
 }
 
-.pokemong img{
+.pokemon img{
     width: 100px;
     height: 100px;
+}
+
+.new-monster-con {
+    display: flex;
+}
+
+.new-monster-img-con {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: yellow;
+}
+
+.new-monster-img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--borderRadius);
+    border: solid red 1px;
+}
+
+/* Hides all upload file buttons */
+input[type="file"] {
+    display: none;
 }
