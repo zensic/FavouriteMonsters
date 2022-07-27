@@ -4,6 +4,7 @@ using FavouriteMons.Areas.Identity.Data;
 using EmailService;
 using FavouriteMons.DataAccess;
 using Refit;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -90,13 +91,24 @@ builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // Add Cloudinary services
+Cloudinary cloudinary = new Cloudinary(
+    new Account(
+        builder.Configuration.GetValue<string>("AccountSettings:CloudName"),
+        builder.Configuration.GetValue<string>("AccountSettings:ApiKey"),
+        builder.Configuration.GetValue<string>("AccountSettings:ApiSecret")
+        )
+    );
+
 if (env == "Production")
 {
     var cloudName = Environment.GetEnvironmentVariable("CLOUDINARY_NAME");
     var apiKey = Environment.GetEnvironmentVariable("CLOUDINARY_KEY");
     var apiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_SECRET");
+
+    cloudinary = new Cloudinary(new Account(cloudName, apiKey, apiSecret));
 }
 
+builder.Services.AddSingleton(cloudinary);
 
 // Add MVC and razor pages
 builder.Services.AddControllersWithViews();

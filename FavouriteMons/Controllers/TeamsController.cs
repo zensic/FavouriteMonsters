@@ -60,7 +60,7 @@ namespace FavouriteMons.Controllers
         // POST: Teams/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,CreatedAt,Monsters")] Teams teams)
+        public async Task<IActionResult> Create([Bind("UserId,CreatedAt,Monsters")] Teams teams)
         {
             if (ModelState.IsValid)
             {

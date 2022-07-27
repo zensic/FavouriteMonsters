@@ -7,16 +7,16 @@
 
 <div class="container red">
     <div class="row
-    row-cols-sm-2
-    row-cols-md-4
+    row-cols-lg-4
+    row-cols-md-2
     ">
-        <button class="col pokemon" style="
+        <a class="col pokemon" asp-controller="Monsters" asp-action="Create" style="
             justify-content: center;
             background-color: lightgreen;
             border: none
         ">
             Add
-        </button>
+        </a>
         @foreach (var monster in Model)
         {
             <div class="col pokemon">
