@@ -8,11 +8,11 @@ namespace FavouriteMons.DataAccess
         [Get("/Monsters")]
         Task<List<Monsters>> GetMonsters();
 
-        [Get("/Monsters/{id}")]
-        Task<Monsters> GetMonsters(Guid id);
-
         [Post("/Monsters")]
         Task CreateMonster([Body] Monsters monster);
+
+        [Get("/Monsters/{id}")]
+        Task<Monsters> GetMonsters(Guid id);
 
         [Put("/Monsters/{id}")]
         Task UpdateMonster(Guid id, [Body] Monsters monster);

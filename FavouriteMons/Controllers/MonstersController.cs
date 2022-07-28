@@ -51,8 +51,6 @@ namespace FavouriteMons.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Element")] Monsters monster, IFormFile[] images)
         {
-            //if (ModelState.IsValid)
-            //{
             // Handle image upload with Cloudinary
             if (images == null || images.Length == 0)
             {
@@ -82,13 +80,9 @@ namespace FavouriteMons.Controllers
             }
 
             // Add monster to database
-            monster.Id = Guid.NewGuid();
             await _monstersData.CreateMonster(monster);
 
             return RedirectToAction("Index");
-            //}
-
-            //return View();
         }
     }
 }
