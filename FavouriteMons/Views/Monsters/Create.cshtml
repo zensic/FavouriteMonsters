@@ -8,7 +8,7 @@
 
 <hr />
 <div class="row">
-    <form asp-action="Create">
+    <form asp-action="Create" method="Post" enctype="multipart/form-data">
         <div class="new-monster-con">
             <div class="new-monster-img-con">
                 <img id="new-monster-image" src="~/images/no_image_square.jpg" class="new-monster-img" alt="Monster Image" />
@@ -25,8 +25,6 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
-
-
     </form>
 </div>
 

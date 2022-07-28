@@ -11,13 +11,13 @@ namespace FavouriteMons.DataAccess
         [Get("/Monsters/{id}")]
         Task<Monsters> GetMonsters(Guid id);
 
-        [Post("/Guests")]
+        [Post("/Monsters")]
         Task CreateMonster([Body] Monsters monster);
 
-        [Put("/Guest/{id}")]
+        [Put("/Monsters/{id}")]
         Task UpdateMonster(Guid id, [Body] Monsters monster);
 
-        [Delete("/Guests/{id}")]
+        [Delete("/Monsters/{id}")]
         Task DeleteMonster(Guid id);
     }
 }

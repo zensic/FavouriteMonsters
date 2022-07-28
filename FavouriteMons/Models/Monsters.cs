@@ -5,7 +5,7 @@ namespace FavouriteMons.Models
     public class Monsters
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

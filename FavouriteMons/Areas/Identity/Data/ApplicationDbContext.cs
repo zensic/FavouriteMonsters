@@ -47,6 +47,4 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     }
 
     public DbSet<Teams> Teams { get; set; }
-    public DbSet<Photo> Photos { get; set; }
-    public DbSet<UploadResult> UploadResults { get; set; }
 }

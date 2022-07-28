@@ -54,7 +54,7 @@ builder.Services.AddCors(policy =>
         .AllowAnyMethod());
 });
 
-// Add rest api service (Refit)
+// Add REST api service (Refit)
 string apiServer = "https://localhost:44320/api";
 
 if (env == "Production")

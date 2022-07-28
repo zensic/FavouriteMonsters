@@ -1,4 +1,6 @@
-﻿using FavouriteMons.Areas.Identity.Data;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using FavouriteMons.Areas.Identity.Data;
 using FavouriteMons.DataAccess;
 using FavouriteMons.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +10,13 @@ namespace FavouriteMons.Controllers
 {
     public class MonstersController : Controller
     {
+        private readonly Cloudinary _cloudinary;
         private readonly ApplicationDbContext _context;
         private readonly IMonstersData _monstersData;
 
-        public MonstersController(ApplicationDbContext context, IMonstersData monstersData)
+        public MonstersController(Cloudinary cloudinary, ApplicationDbContext context, IMonstersData monstersData)
         {
+            _cloudinary = cloudinary;
             _context = context;
             _monstersData = monstersData;
         }
@@ -26,10 +30,10 @@ namespace FavouriteMons.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            return View(_monstersData.GetMonsters(id));
+            return View(await _monstersData.GetMonsters(id));
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             List<SelectListItem> types = new List<SelectListItem>()
             {
@@ -45,18 +49,46 @@ namespace FavouriteMons.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Element,ImageUrl")] Monsters monsters, IFormFile[] images)
+        public async Task<IActionResult> Create([Bind("Name,Element")] Monsters monster, IFormFile[] images)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            // Handle image upload with Cloudinary
+            if (images == null || images.Length == 0)
             {
-                monsters.Id = Guid.NewGuid();
-                _context.Add(monsters);
-                await _context.SaveChangesAsync();
+                monster.ImageUrl = "placholder";
+            }
+            else
+            {
+                var result = await _cloudinary.UploadAsync(new ImageUploadParams
+                {
+                    File = new FileDescription(images[0].FileName,
+                        images[0].OpenReadStream()),
+                }).ConfigureAwait(false);
 
-                return RedirectToAction(nameof(Index));
+                monster.ImageUrl = result.Url.AbsoluteUri;
+                //Bytes = (int)result.Bytes,
+                //CreatedAt = DateTime.Now,
+                //Format = result.Format,
+                //Height = result.Height,
+                //Path = result.Url.AbsolutePath,
+                //PublicId = result.PublicId,
+                //ResourceType = result.ResourceType,
+                //SecureUrl = result.SecureUrl.AbsoluteUri,
+                //Signature = result.Signature,
+                //Type = result.JsonObj["type"]?.ToString(),
+                //Url = result.Url.AbsoluteUri,
+                //Width = result.Width
             }
 
-            return View(monsters);
+            // Add monster to database
+            monster.Id = Guid.NewGuid();
+            await _monstersData.CreateMonster(monster);
+
+            return RedirectToAction("Index");
+            //}
+
+            //return View();
         }
     }
 }
