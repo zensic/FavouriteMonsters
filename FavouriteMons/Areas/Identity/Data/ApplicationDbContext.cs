@@ -47,4 +47,5 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     }
 
     public DbSet<Teams> Teams { get; set; }
+    public DbSet<TeamMonsters> TeamMonsters { get; set; }
 }

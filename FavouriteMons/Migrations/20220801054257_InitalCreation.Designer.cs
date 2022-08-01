@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FavouriteMons.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220722074837_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20220801054257_InitalCreation")]
+    partial class InitalCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,23 @@ namespace FavouriteMons.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("FavouriteMons.Models.TeamMonsters", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MonsterId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("TeamId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeamMonsters");
+                });
 
             modelBuilder.Entity("FavouriteMons.Models.Teams", b =>
                 {
@@ -29,10 +46,6 @@ namespace FavouriteMons.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Monsters")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");

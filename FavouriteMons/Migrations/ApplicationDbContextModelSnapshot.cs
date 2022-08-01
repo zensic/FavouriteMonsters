@@ -19,6 +19,23 @@ namespace FavouriteMons.Migrations
                 .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("FavouriteMons.Models.TeamMonsters", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MonsterId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("TeamId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeamMonsters");
+                });
+
             modelBuilder.Entity("FavouriteMons.Models.Teams", b =>
                 {
                     b.Property<Guid>("Id")
@@ -27,10 +44,6 @@ namespace FavouriteMons.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Monsters")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");

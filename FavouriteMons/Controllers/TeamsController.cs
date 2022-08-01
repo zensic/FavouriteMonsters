@@ -10,6 +10,7 @@ using FavouriteMons.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using FavouriteMons.DataAccess;
 
 namespace FavouriteMons.Controllers
 {
@@ -17,10 +18,12 @@ namespace FavouriteMons.Controllers
     public class TeamsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMonstersData _monstersData;
 
-        public TeamsController(ApplicationDbContext context)
+        public TeamsController(ApplicationDbContext context, IMonstersData monstersData)
         {
             _context = context;
+            _monstersData = monstersData;
         }
 
         // GET: Teams
@@ -50,9 +53,10 @@ namespace FavouriteMons.Controllers
         }
 
         // GET: Teams/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             ViewData["UserId"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["PokemonList"] = await _monstersData.GetMonsters();
 
             return View();
         }

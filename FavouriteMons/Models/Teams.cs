@@ -12,7 +12,5 @@ namespace FavouriteMons.Models
         public Guid UserId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-        public string Monsters { get; set; }
     }
 }

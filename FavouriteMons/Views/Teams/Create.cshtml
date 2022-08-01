@@ -1,29 +1,33 @@
-﻿@model FavouriteMons.Models.Teams
+﻿@{
 
-@{
-    ViewData["Title"] = "Create";
 }
 
-<h1>Create a new Team</h1>
+<h1>Create a new team</h1>
 
 <hr />
-<div class="row">
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input asp-for="UserId" class="form-control" value="@ViewData["UserId"]" hidden />
-        <label asp-for="Monsters" class="control-label"></label>
-        <input asp-for="Monsters" class="form-control" />
-        <span asp-validation-for="Monsters" class="text-danger"></span>
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </form>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+<form asp-action="Create" method="Post">
+    <div>
+        <p>Monster 1</p>
+        <input />
+    </div>
+    <div>
+        <p>Monster 2</p>
+        <input />
+    </div>
+    <div>
+        <p>Monster 3</p>
+        <input />
+    </div>
+    <div>
+        <p>Monster 4</p>
+        <input />
+    </div>
+    <div>
+        <p>Monster 5</p>
+        <input />
+    </div>
+    <div>
+        <p>Monster 6</p>
+        <input />
+    </div>
+</form>
