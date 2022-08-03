@@ -2,14 +2,12 @@
 
 namespace FavouriteMons.Models
 {
-    public class Monsters
+    public class Elements
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        [Required]
+
         public string Name { get; set; }
-        [Required]
-        public Guid ElementId { get; set; }
-        public string ImageUrl { get; set; }
+        public string Color { get; set; }
     }
 }

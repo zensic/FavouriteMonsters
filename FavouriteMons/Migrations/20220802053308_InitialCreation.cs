@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FavouriteMons.Migrations
 {
-    public partial class InitalCreation : Migration
+    public partial class InitialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,6 +1,4 @@
-﻿@model IEnumerable<FavouriteMons.Models.Monsters>
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,15 +15,16 @@
         ">
             Add
         </a>
-        @foreach (var monster in Model)
+        @foreach (var monster in ViewBag.monsters)
         {
-            <div class="col pokemon">
-                <img src=@monster.ImageUrl />
-                <div>
-                    <strong>@monster.Name</strong>
-                </div>
-                <div>@monster.Element</div>
+        <div class="col pokemon">
+            <img src="@monster["url"]"/>
+            <div>
+                <strong>@monster["name"]</strong>
             </div>
+            <div style="background-color: @monster["color"]">@monster["element"]</div>
+        </div>
         }
+
     </div>
 </div>

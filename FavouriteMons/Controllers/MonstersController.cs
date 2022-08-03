@@ -5,6 +5,7 @@ using FavouriteMons.DataAccess;
 using FavouriteMons.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace FavouriteMons.Controllers
 {
@@ -13,19 +14,24 @@ namespace FavouriteMons.Controllers
         private readonly Cloudinary _cloudinary;
         private readonly ApplicationDbContext _context;
         private readonly IMonstersData _monstersData;
+        private readonly IElementsData _elementsData;
 
-        public MonstersController(Cloudinary cloudinary, ApplicationDbContext context, IMonstersData monstersData)
+        public MonstersController(Cloudinary cloudinary, ApplicationDbContext context, IMonstersData monstersData, IElementsData elementsData)
         {
             _cloudinary = cloudinary;
             _context = context;
             _monstersData = monstersData;
+            _elementsData = elementsData;
+
         }
 
         public async Task<IActionResult> Index()
         {
             var monsters = await _monstersData.GetMonsters();
 
-            return View(monsters);
+            ViewBag.monsters = monsters;
+
+            return View();
         }
 
         public async Task<IActionResult> Details(Guid id)
@@ -33,14 +39,16 @@ namespace FavouriteMons.Controllers
             return View(await _monstersData.GetMonsters(id));
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            List<SelectListItem> types = new List<SelectListItem>()
+            List<Elements> elements = await _elementsData.GetElements();
+
+            List<SelectListItem> types = new List<SelectListItem>();
+
+            for (int i = 0; i < elements.Count; i++)
             {
-                new SelectListItem("Fire", "0", true),
-                new SelectListItem("Grass", "1"),
-                new SelectListItem("Water", "2")
-            };
+                types.Add(new SelectListItem(elements[i].Name, elements[i].Id.ToString()));
+            }
 
             ViewBag.types = types;
 
@@ -49,7 +57,7 @@ namespace FavouriteMons.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Element")] Monsters monster, IFormFile[] images)
+        public async Task<IActionResult> Create([Bind("Name, ElementId")] Monsters monster, IFormFile[] images)
         {
             // Handle image upload with Cloudinary
             if (images == null || images.Length == 0)
@@ -80,7 +88,7 @@ namespace FavouriteMons.Controllers
             }
 
             // Add monster to database
-            await _monstersData.CreateMonster(monster);
+             await _monstersData.CreateMonster(monster);
 
             return RedirectToAction("Index");
         }

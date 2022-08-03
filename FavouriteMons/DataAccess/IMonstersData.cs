@@ -6,7 +6,7 @@ namespace FavouriteMons.DataAccess
     public interface IMonstersData
     {
         [Get("/Monsters")]
-        Task<List<Monsters>> GetMonsters();
+        Task<IEnumerable<object>> GetMonsters();
 
         [Post("/Monsters")]
         Task CreateMonster([Body] Monsters monster);

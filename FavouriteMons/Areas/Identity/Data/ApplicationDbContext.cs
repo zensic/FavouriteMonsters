@@ -16,6 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(builder);
 
+        // Renaming auto-generated identity tables
         builder.Entity<IdentityUser>(entity =>
         {
             entity.ToTable(name: "Users");

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FavouriteMons.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220801054257_InitalCreation")]
-    partial class InitalCreation
+    [Migration("20220802053308_InitialCreation")]
+    partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
