@@ -1,19 +1,22 @@
 ﻿@model IEnumerable<FavouriteMons.Models.Teams>
 
+<div style="width: 100%; display: flex; align-items:center; justify-content: space-between">
+  <h1>Your teams</h1>
+  <a class="btn btn-primary" asp-controller="Teams" asp-action="Create">Create a team</a>
+</div>
+
+<hr />
+
 @{
-    List<int> numbers = new ();
-    numbers.Add(1);
-    numbers.Add(2);
-    numbers.Add(3);
-    numbers.Add(4);
+  List<int> numbers = new();
+  numbers.Add(1);
 }
 
 <div>
-    <div class="container d-flex flex-column">
-        <a asp-controller="Teams" asp-action="Create">Create a team</a>
-        @foreach (var num in numbers)
-        {
-           <div>@num</div>
-        }
-    </div>
+  <div class="container d-flex flex-column">
+    @foreach (var num in numbers)
+    {
+      <div>@num</div>
+    }
+  </div>
 </div>

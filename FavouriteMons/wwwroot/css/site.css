@@ -1,67 +1,117 @@
 :root {
-    --borderRadius: 12px;
+  --borderRadius: 12px;
 }
 
 html {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 @media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+  html {
+    font-size: 16px;
+  }
 }
 
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    margin-bottom: 60px;
+  margin-bottom: 60px;
 }
 
 .red {
-    background-color: red;
-}
-
-/* Monsters view */
-
-.pokemon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 240px;
-    padding: 1rem;
-    border-radius: var(--borderRadius);
-    background-color: yellow;
-}
-
-.pokemon img{
-    width: 100px;
-    height: 100px;
-}
-
-.new-monster-con {
-    display: flex;
-}
-
-.new-monster-img-con {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: yellow;
-}
-
-.new-monster-img {
-    width: 300px;
-    height: 300px;
-    object-fit: cover;
-    border-radius: var(--borderRadius);
-    border: solid red 1px;
+  background-color: red;
 }
 
 /* Hides all upload file buttons */
 input[type="file"] {
-    display: none;
+  display: none;
+}
+
+/* Monsters view */
+
+.monster {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 16rem;
+  padding: 1rem;
+  border-radius: var(--borderRadius);
+  background-color: yellow;
+}
+
+  .monster img {
+    width: 10rem;
+    height: 10rem;
+    object-fit: cover;
+  }
+
+.monster-type {
+  width: 5rem;
+  text-align: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  color: white;
+  border: solid 2px gray;
+  border-radius: var(--borderRadius);
+}
+
+.new-monster-con {
+  display: flex;
+}
+
+.new-monster-img-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: yellow;
+}
+
+.new-monster-img {
+  width: 12rem;
+  height: 12rem;
+  object-fit: cover;
+  border-radius: var(--borderRadius);
+  border: solid red 1px;
+}
+
+.team {
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  border: solid 1px gray;
+}
+
+.monster-selection {
+  width: 100%;
+  s height: 10rem;
+  display: flex;
+  align-items: center;
+  border: solid 1px gray;
+}
+
+  .monster-selection img {
+    width: 8rem;
+    height: 8rem;
+  }
+
+.monster-selected {
+  height: 6rem;
+  width: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px gray;
+  border-radius: var(--borderRadius);
+}
+
+  .monster-selected img {
+    height: 4rem;
+    width: 4rem;
+  }
+
+.plus-selection {
 }

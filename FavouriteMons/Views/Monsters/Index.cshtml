@@ -1,30 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewData["Title"] = "Index";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container red">
-    <div class="row
-    row-cols-lg-4
-    row-cols-md-2
-    ">
-        <a class="col pokemon" asp-controller="Monsters" asp-action="Create" style="
-            justify-content: center;
-            background-color: lightgreen;
-            border: none
-        ">
-            Add
-        </a>
-        @foreach (var monster in ViewBag.monsters)
-        {
-        <div class="col pokemon">
-            <img src="@monster["url"]"/>
-            <div>
-                <strong>@monster["name"]</strong>
-            </div>
-            <div style="background-color: @monster["color"]">@monster["element"]</div>
-        </div>
-        }
+<div class="container d-flex justify-content-between align-items-center">
+  <h1>Monsters</h1>
+  <a class="btn btn-primary" asp-controller="Monsters" asp-action="Create">
+    Create a monster
+  </a>
+</div>
+<hr />
 
-    </div>
+<div class="container red">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+
+    @foreach (var monster in ViewBag.monsters)
+    {
+      <div class="monster">
+        <img src="@monster["url"]" />
+        <div>
+          <strong>@monster["name"]</strong>
+        </div>
+        <div class="monster-type" style="background-color: @monster["color"]">@monster["element"]</div>
+      </div>
+    }
+  </div>
 </div>
