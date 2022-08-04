@@ -37,13 +37,19 @@
 <script>
   let teamArray = [];
 
+  // Credits to https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
+  const uuidv4 = () => {
+      return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      )
+  };
+
   const handleRemove = (id) => {
-      console.log("Removed " + id);
-      console.log(teamArray);
+      $('#plus-selection').css("display", "flex");
 
       for (let i = 0; i < teamArray.length; i++) {
-          if (teamArray[i].id == id) {
-              // Removes the item from the teams array
+          if (teamArray[i].tempId == id) {
+
               teamArray.splice(i, 1);
               $("#" + id).remove();
 
@@ -56,12 +62,17 @@
 
   const handleClick = (id, url, name, element) => {
 
-      if (teamArray.length > 5)
+      if (teamArray.length > 5) {
           return 0;
+      }
 
-      teamArray.push({ id, 'url': url, 'name': name, 'element ': element });
+      // Generate uniqur uuid for each monster selected
+      const tempId = uuidv4();
 
-      let component = $('<button/>', { 'id': id, 'class': 'monster-selected' })
+      // Add monster to the list to be pushed into cloud
+      teamArray.push({ 'tempId': tempId, 'id': id, 'url': url, 'name': name, 'element ': element });
+
+      let component = $('<button/>', { 'id': tempId, 'class': 'monster-selected' })
           .append(
               $('<img />', { 'src': url, 'class': "new-monster-img", 'alt': 'Monster Image' })
           )
@@ -70,7 +81,11 @@
           );
 
       $(component).insertBefore('#plus-selection');
-      $('#' + id).click(() => { handleRemove(id) });
+      $('#' + tempId).click(() => { handleRemove(tempId) });
+
+      if (teamArray.length > 5) {
+          $('#plus-selection').css("display", "none");
+      }
   }
 </script>
 }
