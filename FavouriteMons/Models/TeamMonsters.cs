@@ -2,13 +2,19 @@
 
 namespace FavouriteMons.Models
 {
-    public class TeamMonsters
+  public class TeamMonsters
+  {
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
+    [Required]
+    public Guid TeamId { get; set; }
+    [Required]
+    public Guid MonsterId { get; set; }
+
+    public TeamMonsters(Guid teamId, Guid monsterId)
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-        [Required]
-        public Guid TeamId { get; set; }
-        [Required]
-        public Guid MonsterId { get; set; }
+      TeamId = teamId;
+      MonsterId = monsterId;
     }
+  }
 }

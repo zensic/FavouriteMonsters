@@ -13,12 +13,13 @@
         <i id="plus" class="bi bi-plus-lg" style="font-size: 2rem"></i>
       </div>
     </div>
+    <button onclick="handleSubmit" class="btn btn-success">Confirm</button>
   </div>
   <div class="col-10 red">
     <h3>Add a Monster</h3>
     @foreach (var monster in ViewBag.monsters)
     {
-      <button onclick="handleClick('@monster["id"]', '@monster["url"]', '@monster["name"]', '@monster["element"]')" class="monster-selection">
+      <button onclick="handleAdd('@monster["id"]', '@monster["url"]', '@monster["name"]', '@monster["element"]')" class="monster-selection">
         <div>
           <img src="@monster["url"]" />
         </div>
@@ -36,7 +37,25 @@
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
   }
   <script>
-    let teamArray = [];
+    /*
+    function generateUUID() { // Public Domain/MIT
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if (d > 0) {//Use timestamp until depleted
+            r = (d + r) % 16 | 0;
+            d = Math.floor(d / 16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r) % 16 | 0;
+            d2 = Math.floor(d2 / 16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    }
+    */
+
+    let teamSelected = [];
 
     // Credits to https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
     const uuidv4 = () => {
@@ -45,32 +64,14 @@
         )
     };
 
-    /*
-    function generateUUID() { // Public Domain/MIT
-        var d = new Date().getTime();//Timestamp
-        var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16;//random number between 0 and 16
-            if (d > 0) {//Use timestamp until depleted
-                r = (d + r) % 16 | 0;
-                d = Math.floor(d / 16);
-            } else {//Use microseconds since page-load if supported
-                r = (d2 + r) % 16 | 0;
-                d2 = Math.floor(d2 / 16);
-            }
-            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-        });
-    }
-    */
-
     // Remove monster from team when clicked on
     const handleRemove = (id) => {
         $('#plus-selection').css("display", "flex");
 
-        for (let i = 0; i < teamArray.length; i++) {
-            if (teamArray[i].tempId == id) {
+        for (let i = 0; i < teamSelected.length; i++) {
+            if (teamSelected[i].tempId == id) {
 
-                teamArray.splice(i, 1);
+                teamSelected.splice(i, 1);
                 $("#" + id).remove();
 
                 return;
@@ -78,9 +79,9 @@
         };
     }
 
-    const handleClick = (id, url, name, element) => {
+    const handleAdd = (id, url, name, element) => {
         // A team can't have more than 6 monsters
-        if (teamArray.length > 5) {
+        if (teamSelected.length > 5) {
             return 0;
         }
 
@@ -88,9 +89,9 @@
         var tempId = uuidv4();
 
         // Add monster to the list to be pushed to cloud
-        teamArray.push({ 'tempId': tempId, 'id': id, 'url': url, 'name': name, 'element ': element });
+        teamSelected.push({ 'tempId': tempId, 'monsterId': id });
 
-        // Create component 
+        // Create component
         let component = $('<button/>', { 'id': tempId, 'class': 'monster-selected' })
             .append(
                 $('<img />', { 'src': url, 'class': "new-monster-img", 'alt': 'Monster Image' })
@@ -103,9 +104,38 @@
         $('#' + tempId).click(() => { handleRemove(tempId) });
 
         // Hide the add button when team is full
-        if (teamArray.length > 5) {
+        if (teamSelected.length > 5) {
             $('#plus-selection').css("display", "none");
         }
+    }
+
+    const handleSubmit = () => {
+
+        teamSelected;
+        let TeamNew = {}; // To be pushed to the cloud
+        let MonsterIds = []; // An attribute of TeamNew
+
+        // Grab all information from teamSelected, append it to monsterIds
+        for (monster in teamSelected) {
+            MonsterIds.push(monster.monsterId);
+        }
+
+        TeamNew.MonsterIds = MonsterIds;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Teams/Create',
+            contentType: 'application/json;',
+            data: JSON.stringify(TeamNew),
+            success: function(result) {
+                alert('Successfully received Data ');
+                console.log(result);
+            },
+            error: function() {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
+            }
+        })
     }
   </script>
 }

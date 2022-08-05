@@ -6,7 +6,7 @@ namespace FavouriteMons.Models
     public class Teams
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
 
         [ForeignKey("Users")]
         public Guid UserId { get; set; }
