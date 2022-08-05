@@ -5,87 +5,107 @@
 <h1>Create a new team</h1>
 
 <hr />
-<div class="container">
-  <h3>Your team</h3>
-  <div id="monsters-selected" class="row row-cols-md-6 row-cols-sm-4" ">
-    <div id="plus-selection" class="monster-selected">
-      <i id="plus" class="bi bi-plus-lg" style="font-size: 2rem"></i>
+<div class="row" style="background: blue">
+  <div class="col-2" style="display: flex; flex-direction: column; align-items: center">
+    <h3>Your team</h3>
+    <div class="col">
+      <div id="plus-selection" class="monster-selected">
+        <i id="plus" class="bi bi-plus-lg" style="font-size: 2rem"></i>
+      </div>
     </div>
   </div>
-  <div class="row">
+  <div class="col-10 red">
     <h3>Add a Monster</h3>
     @foreach (var monster in ViewBag.monsters)
     {
-    <button onclick="handleClick('@monster["id"]', '@monster["url"]', '@monster["name"]', '@monster["element"]')" class="monster-selection">
-      <div>
-        <img src="@monster["url"]" />
-      </div>
-      <div>
-        <div>@monster["name"]</div>
-        <div class="monster-type" style="background-color: @monster["color"]">@monster["element"]</div>
-      </div>
-    </button>
+      <button onclick="handleClick('@monster["id"]', '@monster["url"]', '@monster["name"]', '@monster["element"]')" class="monster-selection">
+        <div>
+          <img src="@monster["url"]" />
+        </div>
+        <div>
+          <div>@monster["name"]</div>
+          <div class="monster-type" style="background-color: @monster["color"]">@monster["element"]</div>
+        </div>
+      </button>
     }
   </div>
 </div>
-
 
 @section Scripts {
   @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
   }
-<script>
-  let teamArray = [];
+  <script>
+    let teamArray = [];
 
-  // Credits to https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
-  const uuidv4 = () => {
-      return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-      )
-  };
+    // Credits to https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
+    const uuidv4 = () => {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        )
+    };
 
-  const handleRemove = (id) => {
-      $('#plus-selection').css("display", "flex");
+    /*
+    function generateUUID() { // Public Domain/MIT
+        var d = new Date().getTime();//Timestamp
+        var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16;//random number between 0 and 16
+            if (d > 0) {//Use timestamp until depleted
+                r = (d + r) % 16 | 0;
+                d = Math.floor(d / 16);
+            } else {//Use microseconds since page-load if supported
+                r = (d2 + r) % 16 | 0;
+                d2 = Math.floor(d2 / 16);
+            }
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    }
+    */
 
-      for (let i = 0; i < teamArray.length; i++) {
-          if (teamArray[i].tempId == id) {
+    // Remove monster from team when clicked on
+    const handleRemove = (id) => {
+        $('#plus-selection').css("display", "flex");
 
-              teamArray.splice(i, 1);
-              $("#" + id).remove();
+        for (let i = 0; i < teamArray.length; i++) {
+            if (teamArray[i].tempId == id) {
 
-              return;
-          }
-      };
+                teamArray.splice(i, 1);
+                $("#" + id).remove();
 
-      console.log(teamArray);
-  }
+                return;
+            }
+        };
+    }
 
-  const handleClick = (id, url, name, element) => {
+    const handleClick = (id, url, name, element) => {
+        // A team can't have more than 6 monsters
+        if (teamArray.length > 5) {
+            return 0;
+        }
 
-      if (teamArray.length > 5) {
-          return 0;
-      }
+        // Generate unique uuid for each monster selected
+        var tempId = uuidv4();
 
-      // Generate uniqur uuid for each monster selected
-      const tempId = uuidv4();
+        // Add monster to the list to be pushed to cloud
+        teamArray.push({ 'tempId': tempId, 'id': id, 'url': url, 'name': name, 'element ': element });
 
-      // Add monster to the list to be pushed into cloud
-      teamArray.push({ 'tempId': tempId, 'id': id, 'url': url, 'name': name, 'element ': element });
+        // Create component 
+        let component = $('<button/>', { 'id': tempId, 'class': 'monster-selected' })
+            .append(
+                $('<img />', { 'src': url, 'class': "new-monster-img", 'alt': 'Monster Image' })
+            )
+            .append(
+                $('<div />').text(name)
+            );
 
-      let component = $('<button/>', { 'id': tempId, 'class': 'monster-selected' })
-          .append(
-              $('<img />', { 'src': url, 'class': "new-monster-img", 'alt': 'Monster Image' })
-          )
-          .append(
-              $('<div />').text(name)
-          );
+        $(component).insertBefore('#plus-selection');
+        $('#' + tempId).click(() => { handleRemove(tempId) });
 
-      $(component).insertBefore('#plus-selection');
-      $('#' + tempId).click(() => { handleRemove(tempId) });
-
-      if (teamArray.length > 5) {
-          $('#plus-selection').css("display", "none");
-      }
-  }
-</script>
+        // Hide the add button when team is full
+        if (teamArray.length > 5) {
+            $('#plus-selection').css("display", "none");
+        }
+    }
+  </script>
 }
