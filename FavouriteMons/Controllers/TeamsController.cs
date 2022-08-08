@@ -29,9 +29,26 @@ namespace FavouriteMons.Controllers
     // GET: Teams
     public async Task<IActionResult> Index()
     {
-      return _context.Teams != null ?
-                  View(await _context.Teams.ToListAsync()) :
-                  Problem("Entity set 'ApplicationDbContext.Teams'  is null.");
+      // Returns a list of team objects
+      // Each team has date created
+      // Each team has a list of monster objects
+
+      // Grab all teams first 
+      var teamList = await (from teams in _context.Teams
+                            join teamMonsters in _context.TeamMonsters on teams.Id equals teamMonsters.TeamId
+                            where teams.UserId == Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                            select new
+                            {
+                              TeamId = teams.Id,
+                              DateCreated = teams.CreatedAt,
+
+                            })
+                            .AsNoTracking()
+                            .ToListAsync();
+
+      ViewBag.teamList = teamList;
+
+      return View();
     }
 
     // GET: Teams/Details/5
