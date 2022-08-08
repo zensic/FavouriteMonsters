@@ -13,7 +13,7 @@
         <i id="plus" class="bi bi-plus-lg" style="font-size: 2rem"></i>
       </div>
     </div>
-    <button onclick="handleSubmit" class="btn btn-success">Confirm</button>
+    <button onclick="handleSubmit()" class="btn btn-success">Confirm</button>
   </div>
   <div class="col-10 red">
     <h3>Add a Monster</h3>
@@ -110,22 +110,25 @@
     }
 
     const handleSubmit = () => {
+        console.log("Handle submit called");
 
-        teamSelected;
         let TeamNew = {}; // To be pushed to the cloud
         let MonsterIds = []; // An attribute of TeamNew
 
         // Grab all information from teamSelected, append it to monsterIds
-        for (monster in teamSelected) {
-            MonsterIds.push(monster.monsterId);
+
+        for (let i = 0; i < teamSelected.length; i++) {
+            MonsterIds.push(teamSelected[i].monsterId);
         }
 
         TeamNew.MonsterIds = MonsterIds;
+        console.log(TeamNew);
+        console.log(JSON.stringify(TeamNew));
 
         $.ajax({
             type: 'POST',
             url: '/Teams/Create',
-            contentType: 'application/json;',
+            contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(TeamNew),
             success: function(result) {
                 alert('Successfully received Data ');

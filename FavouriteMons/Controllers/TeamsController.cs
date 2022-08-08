@@ -63,24 +63,27 @@ namespace FavouriteMons.Controllers
 
     // POST: Teams/Create
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([FromBody] TeamNew teamNew)
     {
       // Generate unique id for teams
       Guid teamGuid = new Guid();
 
-      // Add all selected monsters to team monsters table
-      _context.AddRange(teamNew.MonsterIds);
-      await _context.SaveChangesAsync();
+      // Add each selected team monster to team monsters table
+      foreach (Guid teamMonsterId in teamNew.MonsterIds)
+      {
+        _context.Add(new TeamMonsters(teamGuid, teamMonsterId));
+        await _context.SaveChangesAsync();
+      }
 
       // Add new team to teams table
       Teams teamTemp = new();
       teamTemp.Id = teamGuid;
+      teamTemp.UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
       _context.Add(teamTemp);
       await _context.SaveChangesAsync();
 
-      return RedirectToAction(nameof(Index));
+      return RedirectToAction("Index");
     }
 
     // GET: Teams/Edit/5
