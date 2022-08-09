@@ -34,19 +34,45 @@ namespace FavouriteMons.Controllers
       // Each team has a list of monster objects
 
       // Grab all teams first 
-      var teamList = await (from teams in _context.Teams
-                            join teamMonsters in _context.TeamMonsters on teams.Id equals teamMonsters.TeamId
-                            where teams.UserId == Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
-                            select new
-                            {
-                              TeamId = teams.Id,
-                              DateCreated = teams.CreatedAt,
+      List<TeamDisplay> teamDisplayList = new();
 
-                            })
-                            .AsNoTracking()
-                            .ToListAsync();
+      List<Teams> teamList = await (from teams in _context.Teams
+                                    where teams.UserId == Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                                    select teams)
+                              .AsNoTracking()
+                              .ToListAsync();
 
-      ViewBag.teamList = teamList;
+      // Populate the monster teams with userId and datetime
+      if (teamList.Count > 0)
+      {
+        foreach (Teams team in teamList)
+        {
+          teamDisplayList.Add(new TeamDisplay(team.Id, team.UserId, team.CreatedAt));
+        }
+      }
+      else
+      {
+        return View();
+      }
+
+      // Populate the monster teams into the teamList
+      for (int i = 0; i < teamDisplayList.Count; i++)
+      {
+        // Grab monster ids of monsters in the team
+        List<TeamMonsters> teamMonstersList = await (from teamMonsters in _context.TeamMonsters
+                                                     where teamMonsters.TeamId == teamDisplayList[i].Id
+                                                     select teamMonsters)
+                                                     .AsNoTracking()
+                                                     .ToListAsync();
+
+        // Grab monster data from monster API
+        foreach (TeamMonsters teamMonsters in teamMonstersList)
+        {
+          teamDisplayList[i].Monsters.Add(await _monstersData.GetMonsters(teamMonsters.MonsterId));
+        }
+      }
+
+      ViewBag.teamDisplayList = teamDisplayList;
 
       return View();
     }
@@ -83,7 +109,7 @@ namespace FavouriteMons.Controllers
     public async Task<IActionResult> Create([FromBody] TeamNew teamNew)
     {
       // Generate unique id for teams
-      Guid teamGuid = new Guid();
+      Guid teamGuid = Guid.NewGuid();
 
       // Add each selected team monster to team monsters table
       foreach (Guid teamMonsterId in teamNew.MonsterIds)

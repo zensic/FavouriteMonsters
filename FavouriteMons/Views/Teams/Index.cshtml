@@ -10,11 +10,24 @@
   numbers.Add(1);
 }
 
-<div>
-  <div class="container d-flex flex-column">
-    @foreach (var num in numbers)
-    {
-      <div>@num</div>
-    }
-  </div>
+
+<div class="col">
+  @foreach (TeamDisplay team in ViewBag.teamDisplayList)
+  {
+    <div class="row">
+      <div>@team.Id</div>
+      <div>@team.CreatedAt</div>
+      <div class="row row-cols-6">
+        @foreach (Monsters monster in team.Monsters)
+        {
+          <div class="monster">
+            <img src="@monster.ImageUrl" />
+            <div>
+              <strong>@monster.Name</strong>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
 </div>
