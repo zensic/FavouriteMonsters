@@ -22,7 +22,6 @@ namespace FavouriteMons.Controllers
       _context = context;
       _monstersData = monstersData;
       _elementsData = elementsData;
-
     }
 
     public async Task<IActionResult> Index()
