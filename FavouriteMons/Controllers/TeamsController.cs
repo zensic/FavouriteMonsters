@@ -52,6 +52,7 @@ namespace FavouriteMons.Controllers
       }
       else
       {
+        ViewBag.teamDisplayList = teamDisplayList;
         return View();
       }
 
@@ -73,7 +74,6 @@ namespace FavouriteMons.Controllers
       }
 
       ViewBag.teamDisplayList = teamDisplayList;
-
       return View();
     }
 

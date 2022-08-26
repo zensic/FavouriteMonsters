@@ -99,25 +99,22 @@
         let MonsterIds = []; // An attribute of TeamNew
 
         // Grab all information from teamSelected, append it to monsterIds
-
         for (let i = 0; i < teamSelected.length; i++) {
             MonsterIds.push(teamSelected[i].monsterId);
         }
 
         TeamNew.MonsterIds = MonsterIds;
-        console.log(TeamNew);
-        console.log(JSON.stringify(TeamNew));
 
         $.ajax({
             type: 'POST',
             url: '/Teams/Create',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(TeamNew),
-            success: function(result) {
+            success: function (result) {
                 alert('Successfully received Data ');
                 console.log(result);
             },
-            error: function() {
+            error: function () {
                 alert('Failed to receive the Data');
                 console.log('Failed ');
             }

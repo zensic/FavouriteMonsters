@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Graph of monster popularity</h1>
+
+<hr />
+<div id="monster-graph">
+
+</div>
+@section Scripts {
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
+  <script>
+    const dataset = [12, 31, 22, 17, 25, 18, 29, 14, 9];
+
+    const w = 500;
+    const h = 100;
+
+    const svg = d3.select("#monster-graph")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+    svg.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", (d, i) => i * 30)
+        .attr("y", (d, i) => h - 3 * d)
+        .attr("width", 25)
+        .attr("height", (d, i) => d * 3)
+        .attr("fill", "navy");
+
+    svg.selectAll("text")
+        .data(dataset)
+        .enter()
+        .append("text")
+        .text((d) => d)
+        .attr("x", (d, i) => i * 30)
+        .attr("y", (d, i) => h - (3 * d) - 3)
+  </script>
+}

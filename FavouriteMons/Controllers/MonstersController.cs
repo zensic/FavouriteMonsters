@@ -54,6 +54,11 @@ namespace FavouriteMons.Controllers
       return View();
     }
 
+    public async Task<IActionResult> Popularity()
+    {
+      return View();
+    }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Name, ElementId")] Monsters monster, IFormFile[] images)
