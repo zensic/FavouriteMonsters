@@ -56,6 +56,10 @@ namespace FavouriteMons.Controllers
 
     public async Task<IActionResult> Popularity()
     {
+      var monsters = await _monstersData.GetMonsters();
+
+      ViewBag.monsters = monsters;
+
       return View();
     }
 
