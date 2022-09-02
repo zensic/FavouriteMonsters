@@ -1,5 +1,8 @@
 :root {
   --borderRadius: 12px;
+  --primaryColor: #0095EB;
+  --secondaryColor: #00446B;
+  --tertaryColor: #47B1EE;
 }
 
 html {
@@ -30,8 +33,60 @@ input[type="file"] {
   display: none;
 }
 
-/* Monsters view */
+/* Logo */
+.logo-favourite {
+  color: var(--secondaryColor)
+}
+.logo-monsters {
+  color: var(--tertaryColor)
+}
+/* Logo end */
 
+/* Login page start */
+.login-container {
+  display: flex;
+  align-items: stretch;
+  height: 75vh;
+  border-radius: var(--borderRadius);
+  overflow: hidden;
+  border: 0.5px solid gray;
+  box-shadow: 5px 5px;
+}
+
+.login-image {
+  width: 50%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.login-image img {
+  height: 100%;
+}
+
+.login-form-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form {
+  width: 80%;
+}
+
+.login-form-forgetpass {
+  width: 100%;
+  text-align: center;
+}
+
+.login-mt {
+  margin-top: 0.5rem;
+}
+
+/* Login page end */
+/* Monsters view */
 .monster {
   display: flex;
   flex-direction: column;

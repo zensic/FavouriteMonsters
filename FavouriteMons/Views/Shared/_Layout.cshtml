@@ -13,7 +13,7 @@
   <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
       <div class="container-fluid">
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Favourite Monsters</a>
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index"><strong><span class="logo-favourite">Favourite</span> <span class="logo-monsters">Monsters</span></strong></a>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
           <ul class="navbar-nav flex-grow-1">
             @if (User.Identity.IsAuthenticated)
@@ -22,7 +22,7 @@
                 <a class="nav-link text-dark" asp-area="" asp-controller="Monsters" asp-action="Index">Monsters</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Monsters" asp-action="Index">Teams</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Index">Teams</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Monsters" asp-action="Popularity">Popularity</a>

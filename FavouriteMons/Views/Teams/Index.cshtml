@@ -1,5 +1,5 @@
 ﻿<div style="width: 100%; display: flex; align-items:center; justify-content: space-between">
-  <h1>Your teams</h1>
+  <h2>Your teams</h2>
   <a class="btn btn-primary" asp-controller="Teams" asp-action="Create">Create a team</a>
 </div>
 
@@ -9,7 +9,6 @@
   List<int> numbers = new();
   numbers.Add(1);
 }
-
 
 <div class="col">
   @foreach (TeamDisplay team in ViewBag.teamDisplayList)
