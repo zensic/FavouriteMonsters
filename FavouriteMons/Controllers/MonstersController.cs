@@ -6,6 +6,7 @@ using FavouriteMons.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace FavouriteMons.Controllers
 {
@@ -58,7 +59,7 @@ namespace FavouriteMons.Controllers
     {
       var monsters = await _monstersData.GetMonsters();
 
-      ViewBag.monsters = monsters;
+      ViewBag.monsters = JsonSerializer.Serialize(monsters);
 
       return View();
     }
