@@ -66,7 +66,7 @@ namespace FavouriteMons.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Name, ElementId")] Monsters monster, IFormFile[] images)
+    public async Task<IActionResult> Create([Bind("Name, ElementId", "HP", "Attack", "Defence", "Speed")] Monsters monster, IFormFile[] images)
     {
       // Handle image upload with Cloudinary
       if (images == null || images.Length == 0)
