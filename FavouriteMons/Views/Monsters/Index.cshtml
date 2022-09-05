@@ -11,18 +11,15 @@
 </div>
 <hr />
 
-<div class="container red">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-
-    @foreach (var monster in ViewBag.monsters)
-    {
-      <div class="monster">
-        <img src="@monster["url"]" />
-        <div>
-          <strong>@monster["name"]</strong>
-        </div>
-        <div class="monster-type" style="background-color: @monster["color"]">@monster["element"]</div>
+<div class="monsters-container">
+  @foreach (var monster in ViewBag.monsters)
+  {
+    <div class="monster">
+      <img src="@monster["url"]" />
+      <div class="mt-1">
+        <strong>@monster["name"]</strong>
       </div>
-    }
-  </div>
+      <div class="monster-type mt-1" style="background-color: @monster["color"]">@monster["element"]</div>
+    </div>
+  }
 </div>

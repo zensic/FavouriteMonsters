@@ -99,7 +99,7 @@ namespace FavouriteMons.Controllers
       // Add monster to database
       await _monstersData.CreateMonster(monster);
 
-      return RedirectToAction("Index");
+      return RedirectToAction(nameof(Index));
     }
   }
 }
