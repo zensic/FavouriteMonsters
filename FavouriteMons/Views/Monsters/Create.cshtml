@@ -12,17 +12,30 @@
     <div class="new-monster-con">
       <div class="new-monster-img-con">
         <img id="new-monster-image" src="~/images/no_image_square.jpg" class="new-monster-img" alt="Monster Image" />
-        <label class="btn btn-success w-100">
-          <input id="fileupload" type="file" name="images" accept="image/gif, image/jpeg, image/png">
-          Upload Monster Image
+        <label for="fileupload" class="btn btn-primary monster-upload">
+          Upload Image
         </label>
+        <input id="fileupload" type="file" name="images" accept="image/gif, image/jpeg, image/png">
       </div>
-      <div>
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <label asp-for="ElementId" class="control-label"></label>
-        <select asp-for="ElementId" class="form-control" asp-items="@ViewBag.types"></select>
-        <input type="submit" value="Create" class="btn btn-primary" />
+      <div class="monster-details-con">
+        <div class="mons-name-con">
+          <input asp-for="Name" placeholder="Name" class="mons-create-name" />
+          <select asp-for="ElementId" asp-items="@ViewBag.types" class="mons-create-dropdown"></select>
+        </div>
+        <div class="mons-stats-con">
+          <label asp-for="HP" class="control-label"></label>
+          <input asp-for="HP" class="form-range" type="range" min="1" max="255" />
+
+          <label asp-for="Attack" class="control-label"></label>
+          <input asp-for="Attack" class="form-range" type="range" min="1" max="255" />
+
+          <label asp-for="Defence" class="control-label"></label>
+          <input asp-for="Defence" class="form-range" type="range" min="1" max="255" />
+
+          <label asp-for="Speed" class="control-label"></label>
+          <input asp-for="Speed" class="form-range" type="range" min="1" max="255" />
+          <input type="submit" value="Create" class="btn btn-success w-100" />
+        </div>
       </div>
     </div>
   </form>

@@ -86,6 +86,83 @@ input[type="file"] {
 }
 
 /* Login page end */
+
+/* Monster creation */
+.new-monster-con {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.new-monster-img-con {
+  height: 21.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--borderRadius);
+  overflow: hidden;
+  box-shadow: 5px 5px;
+  background-color: red;
+}
+
+.new-monster-img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.monster-upload {
+  position: absolute;
+  transform: translate(70%, 350%);
+  z-index: 1;
+}
+
+.monster-details-con {
+  width: 60%;
+}
+
+.mons-name-con {
+  width: 100%;
+  display: flex;
+  box-shadow: 5px 5px;
+}
+
+.mons-create-name {
+  width: 75%;
+  border: none;
+  padding: 0.5rem;
+  color: white;
+  background-color: var(--secondaryColor);
+}
+
+.mons-create-name::placeholder {
+  color: white;
+  opacity: 0.8;
+}
+
+.mons-create-dropdown {
+  width: 25%;
+  border: none;
+  color: white;
+  background-color: var(--primaryColor);
+}
+
+.mons-create-dropdown option {
+  width: 25%;
+  color: black;
+  background-color: white;
+}
+
+.mons-stats-con {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(71, 177, 238, 0.5);
+  border-radius: var(--borderRadius);
+  box-shadow: 5px 5px;
+}
+
+/* Monster creation end */
+
 /* Monsters view */
 .monster {
   display: flex;
@@ -111,25 +188,6 @@ input[type="file"] {
   color: white;
   border: solid 2px gray;
   border-radius: var(--borderRadius);
-}
-
-.new-monster-con {
-  display: flex;
-}
-
-.new-monster-img-con {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: yellow;
-}
-
-.new-monster-img {
-  width: 12rem;
-  height: 12rem;
-  object-fit: cover;
-  border-radius: var(--borderRadius);
-  border: solid red 1px;
 }
 
 .team {
