@@ -2,33 +2,34 @@
   var userId = ViewData["UserId"];
 }
 
-<h2>Create a new team</h2>
+<div style="width: 100%; display: flex; align-items:center; justify-content: space-between">
+  <h2>Create a new team</h2>
+  <button onclick="handleSubmit()" class="btn btn-success">Confirm</button>
+</div>
 
 <hr />
-<div class="row" style="background: blue">
-  <div class="col-2" style="display: flex; flex-direction: column; align-items: center">
+<div class="container">
+  <div class="row" style="background: blue">
     <h3>Your team</h3>
-    <div class="col">
+    <div class="monster-selected-con">
       <div id="plus-selection" class="monster-selected">
         <i id="plus" class="bi bi-plus-lg" style="font-size: 2rem"></i>
       </div>
     </div>
-    <button onclick="handleSubmit()" class="btn btn-success">Confirm</button>
   </div>
-  <div class="col-10 red">
-    <h3>Add a Monster</h3>
-    @foreach (var monster in ViewBag.monsters)
-    {
-      <button onclick="handleAdd('@monster["id"]', '@monster["url"]', '@monster["name"]', '@monster["element"]')" class="monster-selection">
-        <div>
+  <div class="row mt-1">
+    <div class="col col-2 monster-selection-container red">
+      <input style="width: 100%;padding: .5rem" />
+      @foreach (var monster in ViewBag.monsters)
+      {
+        <button onclick="handleAdd('@monster["id"]', '@monster["url"]', '@monster["name"]', '@monster["element"]')" class="monster-selection">
           <img src="@monster["url"]" />
-        </div>
-        <div>
           <div>@monster["name"]</div>
-          <div class="monster-type" style="background-color: @monster["color"]">@monster["element"]</div>
-        </div>
-      </button>
-    }
+        </button>
+      }
+    </div>
+    <div class="col col-10 red">
+    </div>
   </div>
 </div>
 
@@ -48,8 +49,6 @@
 
     // Remove monster from team when clicked on
     const handleRemove = (id) => {
-        $('#plus-selection').css("display", "flex");
-
         for (let i = 0; i < teamSelected.length; i++) {
             if (teamSelected[i].tempId == id) {
 
@@ -82,6 +81,7 @@
                 $('<div />').text(name)
             );
 
+        // Insert compoenent
         $(component).insertBefore('#plus-selection');
         $('#' + tempId).click(() => { handleRemove(tempId) });
 

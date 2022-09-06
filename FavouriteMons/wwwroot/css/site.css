@@ -43,10 +43,10 @@ input[type="file"] {
   color: white !important;
 }
 
-.footer-bar a {
-  text-decoration: none;
-  color: var(--tertaryColor) !important;
-}
+  .footer-bar a {
+    text-decoration: none;
+    color: var(--tertaryColor) !important;
+  }
 
 /* Nav end */
 
@@ -195,15 +195,14 @@ input[type="file"] {
   height: 18rem;
   padding: 1rem;
   border-radius: var(--borderRadius);
-  background-color: rgba(71, 177, 238, 0.2) ;
+  background-color: rgba(71, 177, 238, 0.2);
   box-shadow: 5px 5px;
 }
 
   .monster img {
     width: 10rem;
     height: 10rem;
-    object-fit: cover
-    border-radius: var(--borderRadius);
+    object-fit: cover border-radius: var(--borderRadius);
   }
 
   .monster:hover {
@@ -220,6 +219,9 @@ input[type="file"] {
   border-radius: var(--borderRadius);
 }
 
+/* Monsters view end */
+
+/* Monster team start */
 .team {
   height: 10rem;
   display: flex;
@@ -227,18 +229,30 @@ input[type="file"] {
   border: solid 1px gray;
 }
 
+.monster-selection-container {
+  height: 30vw;
+  overflow-y: scroll;
+}
+
 .monster-selection {
   width: 100%;
-  s height: 10rem;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   border: solid 1px gray;
+  padding: .5rem;
 }
 
   .monster-selection img {
-    width: 8rem;
-    height: 8rem;
+    width: 2rem;
+    height: 2rem;
   }
+
+.monster-selected-con {
+  display: flex;
+  flex-direction: row;
+}
 
 .monster-selected {
   height: 6rem;
@@ -256,5 +270,4 @@ input[type="file"] {
     width: 4rem;
   }
 
-.plus-selection {
-}
+/* Monster team end */
