@@ -1,4 +1,15 @@
-﻿let teamSelected = [];
+﻿import {
+  select,
+  csv,
+  scaleLinear,
+  max,
+  scaleBand,
+  axisLeft,
+  axisBottom,
+  format
+} from 'd3';
+
+let teamSelected = [];
 
 // Credits to https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
 const uuidv4 = () => {
@@ -18,6 +29,21 @@ const handleRemove = (id) => {
       return;
     }
   };
+}
+
+const handleDetails = (id) => {
+  $.ajax({
+    type: 'GET',
+    url: '/Teams/GetMonster',
+    contentType: 'application/json; charset=utf-8',
+    data: {id: id},
+    success: function (result) {
+      console.log(result);
+    },
+    error: function () {
+      console.log('Failed ');
+    }
+  })
 }
 
 const handleAdd = (id, url, name, element) => {

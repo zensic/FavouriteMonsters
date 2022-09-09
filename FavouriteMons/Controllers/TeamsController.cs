@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using FavouriteMons.DataAccess;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace FavouriteMons.Controllers
 {
@@ -77,7 +79,7 @@ namespace FavouriteMons.Controllers
       return View();
     }
 
-    // GET: Teams/Details/5
+    // GET: Teams/Details/Guid
     public async Task<IActionResult> Details(Guid? id)
     {
       if (id == null || _context.Teams == null)
@@ -102,6 +104,15 @@ namespace FavouriteMons.Controllers
       ViewBag.monsters = await _monstersData.GetMonsters();
 
       return View();
+    }
+
+    // GET: Teams/MonsterDetails
+    public async Task<object> GetMonster(Guid id)
+    {
+      var monster = await _monstersData.GetDetailsMonster(id);
+      string serialized = JsonConvert.SerializeObject(monster);
+
+      return serialized;
     }
 
     // POST: Teams/Create

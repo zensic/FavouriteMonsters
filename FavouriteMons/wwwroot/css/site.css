@@ -160,6 +160,7 @@ input[type="file"] {
 .mons-create-dropdown {
   width: 25%;
   border: none;
+  padding: 0.5rem;
   color: white;
   background-color: var(--primaryColor);
 }
@@ -269,5 +270,25 @@ input[type="file"] {
     height: 4rem;
     width: 4rem;
   }
+
+.mons-info-con {
+  background-color: yellow;
+  display: flex;
+}
+
+.mons-info-img-con {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.mons-info-con img {
+  height: 50vh;
+}
+
+.mons-detail-stats {
+  width: 60%;
+  background-color: green;
+}
 
 /* Monster team end */

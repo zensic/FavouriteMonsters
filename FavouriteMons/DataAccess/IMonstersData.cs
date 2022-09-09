@@ -15,6 +15,9 @@ namespace FavouriteMons.DataAccess
     [Get("/Monsters/{id}")]
     Task<Monsters> GetMonsters(Guid id);
 
+    [Get("/Monsters/Details/{id}")]
+    Task<object> GetDetailsMonster(Guid id);
+
     [Put("/Monsters/{id}")]
     Task UpdateMonster(Guid id, [Body] Monsters monster);
 

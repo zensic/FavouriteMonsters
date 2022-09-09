@@ -10,7 +10,6 @@
 <hr />
 <div class="container">
   <div class="row" style="background: blue">
-    <h3>Your team</h3>
     <div class="monster-selected-con">
       <div id="plus-selection" class="monster-selected">
         <i id="plus" class="bi bi-plus-lg" style="font-size: 2rem"></i>
@@ -22,13 +21,23 @@
       <input style="width: 100%;padding: .5rem" />
       @foreach (var monster in ViewBag.monsters)
       {
-        <button onclick="handleAdd('@monster["id"]', '@monster["url"]', '@monster["name"]', '@monster["element"]')" class="monster-selection">
+        <button onclick="handleDetails('@monster["id"]')" class="monster-selection">
           <img src="@monster["url"]" />
           <div>@monster["name"]</div>
         </button>
       }
     </div>
     <div class="col col-10 red">
+      <div class="mons-name-con">
+        <div class="mons-create-name">Name</div>
+        <div class="mons-create-dropdown">Type</div>
+      </div>
+      <div class="mons-info-con mt-2">
+        <div class="mons-info-img-con">
+          <img id="new-monster-image" src="~/images/no_image_square.jpg" alt="Monster Image" />
+        </div>
+        <div class="mons-detail-stats">stats</div>
+      </div>
     </div>
   </div>
 </div>
@@ -37,5 +46,5 @@
   @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
   }
-  <script src="~/js/TeamCreate.js"></script>
+  <script src="~/js/TeamCreate.js?v=7"></script>
 }
