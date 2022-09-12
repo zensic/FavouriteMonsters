@@ -1,15 +1,4 @@
-﻿import {
-  select,
-  csv,
-  scaleLinear,
-  max,
-  scaleBand,
-  axisLeft,
-  axisBottom,
-  format
-} from 'd3';
-
-let teamSelected = [];
+﻿let teamSelected = [];
 
 // Credits to https://stackoverflow.com/questions/105034/how-do-i-create-a-guid-uuid
 const uuidv4 = () => {
@@ -31,6 +20,7 @@ const handleRemove = (id) => {
   };
 }
 
+// Renders details of current selected monster
 const handleDetails = (id) => {
   $.ajax({
     type: 'GET',
@@ -38,7 +28,88 @@ const handleDetails = (id) => {
     contentType: 'application/json; charset=utf-8',
     data: {id: id},
     success: function (result) {
-      console.log(result);
+      let resultJson = JSON.parse(result);
+
+      // Render name and type
+      $('.mons-create-name').text(resultJson['name']);
+      $('.mons-create-dropdown')
+        .text(resultJson['element'])
+        .css("background-color", resultJson['color']);
+
+      // Render image
+      $('#new-monster-image').attr("src", resultJson['url']);
+
+      console.log(resultJson);
+
+      // Place monster stats into a list
+      let statsList = [
+        { stat: "HP", value: resultJson['hp']  },
+        { stat: "Attack", value: resultJson['attack'],  },
+        { stat: "Defence", value : resultJson['defence'],  },
+        { stat: "Speed", value: resultJson['speed'],  }
+      ];
+
+      // Render monster stats from list
+      const svg = d3.select('#mons-info-chart');
+
+      // + is equivalent to intParse
+      const width = +svg.attr('width');
+      const height = +svg.attr('height');
+
+      const render = data => {
+
+        console.log(data);
+
+        // value accesors
+        const xValue = d => d.value;
+        const yValue = d => d.stat;
+
+        // the margin convention
+        const margin = { top: 20, right: 20, bottom: 20, left: 80 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+
+        // domain accepts min and d3.max values of dataset
+        // range accepts min and d3.max values of screen size
+        const xScale = d3.scaleLinear()
+          .domain([0, d3.max(data, xValue)])
+          .range([0, innerWidth]);
+
+        const yScale = d3.scaleBand()
+          .domain(data.map(yValue))
+          .range([0, innerHeight])
+          .padding(0.1);
+
+        // groups everything 
+        const g = svg.append('g')
+          .attr('transform', `translate(${margin.left}, ${margin.top})`)
+
+        // const yAxis = d3.axisLeft(yScale);
+        // yAxis(g.append('g'));
+        g.append('g').call(d3.axisLeft(yScale));
+        g.append('g').call(d3.axisBottom(xScale))
+          .attr('transform', `translate(0, ${innerHeight})`);
+
+        g.selectAll('rect').data(data)
+          .enter().append('rect')
+          .attr('y', d => yScale(yValue(d)))
+          .attr('width', d => xScale(xValue(d)))
+          .attr('height', yScale.bandwidth())
+      };
+
+      // d3.csv makes a http req for data.d3.csv
+      // which makes a http req loads that d3.csv string
+      // parses that d3.csv string into an object
+
+      render(statsList);
+
+      //d3.csv('data.d3.csv').then(data => {
+      //  // d3.formats srting into numbers
+      //  data.forEach(d => {
+      //    d.population = +d.population * 1000;
+      //  });
+      //  render(data);
+      //});
     },
     error: function () {
       console.log('Failed ');
@@ -46,6 +117,7 @@ const handleDetails = (id) => {
   })
 }
 
+// Adds a new component to the user interface
 const handleAdd = (id, url, name, element) => {
   // A team can't have more than 6 monsters
   if (teamSelected.length > 5) {
@@ -77,6 +149,7 @@ const handleAdd = (id, url, name, element) => {
   }
 }
 
+// Posts data to the controller
 const handleSubmit = () => {
   console.log("Handle submit called");
 

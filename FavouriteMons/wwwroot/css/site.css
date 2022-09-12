@@ -274,6 +274,7 @@ input[type="file"] {
 .mons-info-con {
   background-color: yellow;
   display: flex;
+  box-shadow: 5px 5px;
 }
 
 .mons-info-img-con {
@@ -283,11 +284,12 @@ input[type="file"] {
 }
 
 .mons-info-con img {
-  height: 50vh;
+  width: 100%;
 }
 
 .mons-detail-stats {
   width: 60%;
+  padding: 1rem;
   background-color: green;
 }
 

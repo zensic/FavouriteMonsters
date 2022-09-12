@@ -1,7 +1,6 @@
 ﻿@{
   var userId = ViewData["UserId"];
 }
-
 <div style="width: 100%; display: flex; align-items:center; justify-content: space-between">
   <h2>Create a new team</h2>
   <button onclick="handleSubmit()" class="btn btn-success">Confirm</button>
@@ -9,7 +8,7 @@
 
 <hr />
 <div class="container">
-  <div class="row" style="background: blue">
+  <div class="row" style="background: orange">
     <div class="monster-selected-con">
       <div id="plus-selection" class="monster-selected">
         <i id="plus" class="bi bi-plus-lg" style="font-size: 2rem"></i>
@@ -36,7 +35,9 @@
         <div class="mons-info-img-con">
           <img id="new-monster-image" src="~/images/no_image_square.jpg" alt="Monster Image" />
         </div>
-        <div class="mons-detail-stats">stats</div>
+        <div class="mons-detail-stats">
+          <svg id="mons-info-chart" height="500" width="600" />
+        </div>
       </div>
     </div>
   </div>
@@ -46,5 +47,5 @@
   @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
   }
-  <script src="~/js/TeamCreate.js?v=7"></script>
+  <script src="~/js/TeamCreate.js?v=3"></script>
 }
