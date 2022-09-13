@@ -26,7 +26,7 @@ const handleDetails = (id) => {
     type: 'GET',
     url: '/Teams/GetMonster',
     contentType: 'application/json; charset=utf-8',
-    data: {id: id},
+    data: { id: id },
     success: function (result) {
       let resultJson = JSON.parse(result);
 
@@ -39,18 +39,19 @@ const handleDetails = (id) => {
       // Render image
       $('#new-monster-image').attr("src", resultJson['url']);
 
-      console.log(resultJson);
-
       // Place monster stats into a list
       let statsList = [
-        { stat: "HP", value: resultJson['hp']  },
-        { stat: "Attack", value: resultJson['attack'],  },
-        { stat: "Defence", value : resultJson['defence'],  },
-        { stat: "Speed", value: resultJson['speed'],  }
+        { stat: "HP", value: resultJson['hp'] },
+        { stat: "Attack", value: resultJson['attack'], },
+        { stat: "Defence", value: resultJson['defence'], },
+        { stat: "Speed", value: resultJson['speed'], }
       ];
 
       // Render monster stats from list
       const svg = d3.select('#mons-info-chart');
+
+      // Clear previous chart
+      svg.selectAll("*").remove();
 
       // + is equivalent to intParse
       const width = +svg.attr('width');
@@ -58,14 +59,12 @@ const handleDetails = (id) => {
 
       const render = data => {
 
-        console.log(data);
-
         // value accesors
         const xValue = d => d.value;
         const yValue = d => d.stat;
 
         // the margin convention
-        const margin = { top: 20, right: 20, bottom: 20, left: 80 };
+        const margin = { top: 20, right: 20, bottom: 20, left: 40 };
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
 
@@ -78,7 +77,7 @@ const handleDetails = (id) => {
         const yScale = d3.scaleBand()
           .domain(data.map(yValue))
           .range([0, innerHeight])
-          .padding(0.1);
+          .padding(0.2);
 
         // groups everything 
         const g = svg.append('g')
@@ -97,19 +96,8 @@ const handleDetails = (id) => {
           .attr('height', yScale.bandwidth())
       };
 
-      // d3.csv makes a http req for data.d3.csv
-      // which makes a http req loads that d3.csv string
-      // parses that d3.csv string into an object
-
+      // Render the chart
       render(statsList);
-
-      //d3.csv('data.d3.csv').then(data => {
-      //  // d3.formats srting into numbers
-      //  data.forEach(d => {
-      //    d.population = +d.population * 1000;
-      //  });
-      //  render(data);
-      //});
     },
     error: function () {
       console.log('Failed ');

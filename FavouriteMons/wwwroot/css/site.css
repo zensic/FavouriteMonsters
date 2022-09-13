@@ -230,11 +230,6 @@ input[type="file"] {
   border: solid 1px gray;
 }
 
-.monster-selection-container {
-  height: 30vw;
-  overflow-y: scroll;
-}
-
 .monster-selection {
   width: 100%;
   display: flex;
@@ -271,26 +266,43 @@ input[type="file"] {
     width: 4rem;
   }
 
+.monster-list {
+  height: 61.5vh;
+  padding: 0 !important;
+  overflow-y: scroll;
+}
+
 .mons-info-con {
-  background-color: yellow;
   display: flex;
+  padding: 1rem;
+  background-color: rgba(71, 177, 238, 0.4);
   box-shadow: 5px 5px;
 }
 
 .mons-info-img-con {
   width: 40%;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.mons-info-con img {
+.mons-info-img-con img {
   width: 100%;
+  object-fit: scale-down;
 }
 
 .mons-detail-stats {
   width: 60%;
-  padding: 1rem;
-  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+#mons-info-chart {
+  width: 100%;
+}
+
+rect {
+  fill: var(--primaryColor);
+}
 /* Monster team end */
