@@ -125,7 +125,7 @@ input[type="file"] {
 
 .new-monster-img {
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .monster-upload {
@@ -230,6 +230,20 @@ input[type="file"] {
   border: solid 1px gray;
 }
 
+@keyframes jumping {
+  0% {
+    transform: translate(0%, 0%)
+  }
+
+  50% {
+    transform: translate(0%, -10%)
+  }
+
+  100% {
+    transform: translate(0%, 0%)
+  }
+}
+
 .monster-selection {
   width: 100%;
   display: flex;
@@ -243,7 +257,20 @@ input[type="file"] {
   .monster-selection img {
     width: 2rem;
     height: 2rem;
+    margin-right: .5rem;
   }
+
+  .monster-selection:hover {
+    color: white;
+    background-color: var(--secondaryColor);
+  }
+
+    .monster-selection:hover img {
+      animation-name: jumping;
+      animation-iteration-count: infinite;
+      animation-duration: 0.45s;
+      animation-timing-function: ease;
+    }
 
 .monster-selected-con {
   display: flex;
@@ -260,14 +287,33 @@ input[type="file"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: solid 1px gray;
+  margin-right: .5rem;
+  border: none;
   border-radius: var(--borderRadius);
+  background-color: white;
 }
+
+  .monster-selected:hover {
+    color: white;
+    background-color: var(--tertaryColor);
+  }
 
   .monster-selected img {
     height: 4rem;
     width: 4rem;
   }
+
+  .monster-selected:hover img {
+    animation-name: jumping;
+    animation-iteration-count: infinite;
+    animation-duration: 0.45s;
+    animation-timing-function: ease;
+  }
+
+.your-team {
+  color: white;
+  background-color: var(--secondaryColor)
+}
 
 .monster-list {
   height: 61.5vh;
@@ -288,10 +334,16 @@ input[type="file"] {
   justify-content: center;
 }
 
-.mons-info-img-con img {
-  width: 100%;
-  object-fit: scale-down;
-}
+  .mons-info-img-con:hover {
+    background-color: var(--tertaryColor);
+    border-radius: var(--borderRadius);
+    cursor: pointer;
+  }
+
+  .mons-info-img-con img {
+    width: 100%;
+    object-fit: scale-down;
+  }
 
 .mons-detail-stats {
   width: 60%;

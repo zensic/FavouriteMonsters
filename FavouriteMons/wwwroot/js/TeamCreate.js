@@ -9,8 +9,6 @@ const uuidv4 = () => {
 
 // Remove monster from team when clicked on
 const handleRemove = (id) => {
-  console.log(`Added ${id}`);
-  console.log(teamSelected);
 
   for (let i = 0; i < teamSelected.length; i++) {
     if (teamSelected[i].tempId == id) {
@@ -25,8 +23,6 @@ const handleRemove = (id) => {
 
 // Adds a new component to the user interface
 const handleAdd = (id, url, name) => {
-  console.log(`Added ${id}`);
-  console.log(teamSelected);
 
   // A team can't have more than 6 monsters
   if (teamSelected.length > 5) {
@@ -87,8 +83,8 @@ const handleDetails = (id) => {
       $('#new-monster-image').attr("src", url);
 
       // Clear previous click, add to team
-      $('.mons-info-con').off('click');
-      $('.mons-info-con').click(() => { handleAdd(id, url, name) });
+      $('.mons-info-img-con').off('click');
+      $('.mons-info-img-con').click(() => { handleAdd(id, url, name) });
 
       // Place monster stats into a list
       let statsList = [
@@ -122,7 +118,7 @@ const handleDetails = (id) => {
         // domain accepts min and d3.max values of dataset
         // range accepts min and d3.max values of screen size
         const xScale = d3.scaleLinear()
-          .domain([0, d3.max(data, xValue)])
+          .domain([0, 255])
           .range([0, innerWidth]);
 
         const yScale = d3.scaleBand()
