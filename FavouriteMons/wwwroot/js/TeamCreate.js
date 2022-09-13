@@ -9,6 +9,9 @@ const uuidv4 = () => {
 
 // Remove monster from team when clicked on
 const handleRemove = (id) => {
+  console.log(`Added ${id}`);
+  console.log(teamSelected);
+
   for (let i = 0; i < teamSelected.length; i++) {
     if (teamSelected[i].tempId == id) {
 
@@ -18,6 +21,41 @@ const handleRemove = (id) => {
       return;
     }
   };
+}
+
+// Adds a new component to the user interface
+const handleAdd = (id, url, name) => {
+  console.log(`Added ${id}`);
+  console.log(teamSelected);
+
+  // A team can't have more than 6 monsters
+  if (teamSelected.length > 5) {
+    return 0;
+  }
+
+  // Generate unique uuid for each monster selected
+  var tempId = uuidv4();
+
+  // Add monster to the list to be pushed to cloud
+  teamSelected.push({ 'tempId': tempId, 'monsterId': id });
+
+  // Create component
+  let component = $('<button/>', { 'id': tempId, 'class': 'monster-selected' })
+    .append(
+      $('<img />', { 'src': url, 'class': "new-monster-img", 'alt': 'Monster Image' })
+    )
+    .append(
+      $('<div />').text(name)
+    );
+
+  // Insert compoenent
+  $(component).insertBefore('#plus-selection');
+  $('#' + tempId).click(() => { handleRemove(tempId) });
+
+  // Hide the add button when team is full
+  if (teamSelected.length > 5) {
+    $('#plus-selection').css("display", "none");
+  }
 }
 
 // Renders details of current selected monster
@@ -30,21 +68,34 @@ const handleDetails = (id) => {
     success: function (result) {
       let resultJson = JSON.parse(result);
 
+      // Store variables properly
+      let name = resultJson['name'];
+      let color = resultJson['color'];
+      let url = resultJson['url'];
+      let hp = resultJson['hp'];
+      let attack = resultJson['attack'];
+      let defence = resultJson['defence'];
+      let speed = resultJson['speed'];
+
       // Render name and type
       $('.mons-create-name').text(resultJson['name']);
       $('.mons-create-dropdown')
         .text(resultJson['element'])
-        .css("background-color", resultJson['color']);
+        .css("background-color", color);
 
       // Render image
-      $('#new-monster-image').attr("src", resultJson['url']);
+      $('#new-monster-image').attr("src", url);
+
+      // Clear previous click, add to team
+      $('.mons-info-con').off('click');
+      $('.mons-info-con').click(() => { handleAdd(id, url, name) });
 
       // Place monster stats into a list
       let statsList = [
-        { stat: "HP", value: resultJson['hp'] },
-        { stat: "Attack", value: resultJson['attack'], },
-        { stat: "Defence", value: resultJson['defence'], },
-        { stat: "Speed", value: resultJson['speed'], }
+        { stat: "HP", value: hp },
+        { stat: "Attack", value: attack, },
+        { stat: "Defence", value: defence, },
+        { stat: "Speed", value: speed, }
       ];
 
       // Render monster stats from list
@@ -83,8 +134,6 @@ const handleDetails = (id) => {
         const g = svg.append('g')
           .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
-        // const yAxis = d3.axisLeft(yScale);
-        // yAxis(g.append('g'));
         g.append('g').call(d3.axisLeft(yScale));
         g.append('g').call(d3.axisBottom(xScale))
           .attr('transform', `translate(0, ${innerHeight})`);
@@ -103,38 +152,6 @@ const handleDetails = (id) => {
       console.log('Failed ');
     }
   })
-}
-
-// Adds a new component to the user interface
-const handleAdd = (id, url, name, element) => {
-  // A team can't have more than 6 monsters
-  if (teamSelected.length > 5) {
-    return 0;
-  }
-
-  // Generate unique uuid for each monster selected
-  var tempId = uuidv4();
-
-  // Add monster to the list to be pushed to cloud
-  teamSelected.push({ 'tempId': tempId, 'monsterId': id });
-
-  // Create component
-  let component = $('<button/>', { 'id': tempId, 'class': 'monster-selected' })
-    .append(
-      $('<img />', { 'src': url, 'class': "new-monster-img", 'alt': 'Monster Image' })
-    )
-    .append(
-      $('<div />').text(name)
-    );
-
-  // Insert compoenent
-  $(component).insertBefore('#plus-selection');
-  $('#' + tempId).click(() => { handleRemove(tempId) });
-
-  // Hide the add button when team is full
-  if (teamSelected.length > 5) {
-    $('#plus-selection').css("display", "none");
-  }
 }
 
 // Posts data to the controller
