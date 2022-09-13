@@ -21,8 +21,12 @@ namespace FavouriteMons.Controllers
       _elementsData = elementsData;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+      var monsters = await _monstersData.GetMonsters();
+
+      ViewBag.monsters = monsters;
+
       return View();
     }
 

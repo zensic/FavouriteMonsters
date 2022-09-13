@@ -363,17 +363,21 @@ rect {
 
 /* Monster view team start */
 .team-view-con {
-  padding: .5rem;
+  padding: 1rem .5rem;
   background-color: var(--tertaryColor);
   border-radius: var(--borderRadius);
   box-shadow: 5px 5px;
+}
+
+.team-view-title {
+  color: var(--secondaryColor);
 }
 
 .team-view-row {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  padding: 1rem;
+  margin-top: .5rem;
 }
 
 .team-view-item {

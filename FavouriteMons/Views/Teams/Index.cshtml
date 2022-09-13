@@ -14,7 +14,7 @@
   @foreach (TeamDisplay team in ViewBag.teamDisplayList)
   {
     <div class="row team-view-con">
-      <div style="color:white"><strong>#@team.Id</strong></div>
+      <div class="team-view-title"><strong>#@team.Id</strong></div>
       <div style="color:white">Created: @team.CreatedAt</div>
       <div class="team-view-row">
         @foreach (Monsters monster in team.Monsters)
