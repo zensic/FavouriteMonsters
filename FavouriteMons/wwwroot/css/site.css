@@ -248,6 +248,9 @@ input[type="file"] {
 .monster-selected-con {
   display: flex;
   flex-direction: row;
+  padding: 1rem;
+  border-radius: var(--borderRadius);
+  background-color: var(--primaryColor);
 }
 
 .monster-selected {
@@ -268,7 +271,6 @@ input[type="file"] {
 
 .monster-list {
   height: 61.5vh;
-  padding: 0 !important;
   overflow-y: scroll;
 }
 

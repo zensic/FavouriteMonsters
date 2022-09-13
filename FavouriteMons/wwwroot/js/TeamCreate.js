@@ -64,7 +64,7 @@ const handleDetails = (id) => {
         const yValue = d => d.stat;
 
         // the margin convention
-        const margin = { top: 20, right: 20, bottom: 20, left: 40 };
+        const margin = { top: 20, right: 20, bottom: 20, left: 50 };
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
 
