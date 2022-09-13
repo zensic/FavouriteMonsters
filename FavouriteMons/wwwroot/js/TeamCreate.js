@@ -171,7 +171,7 @@ const handleSubmit = () => {
     data: JSON.stringify(TeamNew),
     success: function (result) {
       alert('Successfully received Data ');
-      console.log(result);
+      window.location.href = '/Teams/Index';
     },
     error: function () {
       alert('Failed to receive the Data');

@@ -10,20 +10,17 @@
   numbers.Add(1);
 }
 
-<div class="col">
+<div class="container">
   @foreach (TeamDisplay team in ViewBag.teamDisplayList)
   {
-    <div class="row">
-      <div>@team.Id</div>
-      <div>@team.CreatedAt</div>
-      <div class="row row-cols-6">
+    <div class="row team-view-con">
+      <div style="color:white"><strong>#@team.Id</strong></div>
+      <div style="color:white">Created: @team.CreatedAt</div>
+      <div class="team-view-row">
         @foreach (Monsters monster in team.Monsters)
         {
-          <div class="monster">
+          <div class="team-view-item">
             <img src="@monster.ImageUrl" />
-            <div>
-              <strong>@monster.Name</strong>
-            </div>
           </div>
         }
       </div>

@@ -69,6 +69,7 @@ namespace FavouriteMons.Controllers
                                                      .ToListAsync();
 
         // Grab monster data from monster API
+        // !!IMPORTANT This section takes a while to compute, consider merging team monsters table for better performance
         foreach (TeamMonsters teamMonsters in teamMonstersList)
         {
           teamDisplayList[i].Monsters.Add(await _monstersData.GetMonsters(teamMonsters.MonsterId));
@@ -76,6 +77,7 @@ namespace FavouriteMons.Controllers
       }
 
       ViewBag.teamDisplayList = teamDisplayList;
+
       return View();
     }
 

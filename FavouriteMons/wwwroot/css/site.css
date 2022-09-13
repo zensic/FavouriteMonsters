@@ -222,7 +222,7 @@ input[type="file"] {
 
 /* Monsters view end */
 
-/* Monster team start */
+/* Monster create team start */
 .team {
   height: 10rem;
   display: flex;
@@ -268,7 +268,7 @@ input[type="file"] {
     .monster-selection:hover img {
       animation-name: jumping;
       animation-iteration-count: infinite;
-      animation-duration: 0.45s;
+      animation-duration: 0.4s;
       animation-timing-function: ease;
     }
 
@@ -306,7 +306,7 @@ input[type="file"] {
   .monster-selected:hover img {
     animation-name: jumping;
     animation-iteration-count: infinite;
-    animation-duration: 0.45s;
+    animation-duration: 0.35s;
     animation-timing-function: ease;
   }
 
@@ -359,4 +359,36 @@ input[type="file"] {
 rect {
   fill: var(--primaryColor);
 }
-/* Monster team end */
+/* Monster create team end */
+
+/* Monster view team start */
+.team-view-con {
+  padding: .5rem;
+  background-color: var(--tertaryColor);
+  border-radius: var(--borderRadius);
+  box-shadow: 5px 5px;
+}
+
+.team-view-row {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.team-view-item {
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem;
+  border-radius: var(--borderRadius);
+  background-color: white;
+}
+
+.team-view-con img {
+  width: 100%;
+  object-fit: contain;
+}
+
+/* Monster view team end */
