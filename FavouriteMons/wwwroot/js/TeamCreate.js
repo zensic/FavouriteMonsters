@@ -170,7 +170,7 @@ const handleSubmit = () => {
     contentType: 'application/json; charset=utf-8',
     data: JSON.stringify(TeamNew),
     success: function (result) {
-      alert('Successfully received Data ');
+      alert('Successfully received Data');
       window.location.href = '/Teams/Index';
     },
     error: function () {

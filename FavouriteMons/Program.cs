@@ -57,6 +57,9 @@ builder.Services
 builder.Services
   .AddRefitClient<IElementsData>()
   .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiServer));
+builder.Services
+  .AddRefitClient<ITeamsData>()
+  .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiServer));
 
 // Add mailkit service
 EmailConfiguration emailConfig;
