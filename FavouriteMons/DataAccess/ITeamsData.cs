@@ -8,7 +8,7 @@ namespace FavouriteMons.DataAccess
   public interface ITeamsData
   {
     [Get("/Teams/{id}")]
-    Task<TeamDisplay> GetTeamsById(Guid id);
+    Task<List<TeamDisplay>> GetTeamsById(Guid id);
 
     [Post("/Teams")]
     Task<IActionResult> CreateTeam([Body] TeamNew teamNew);

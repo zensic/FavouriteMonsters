@@ -33,7 +33,10 @@ namespace FavouriteMons.Controllers
     // GET: Teams
     public async Task<IActionResult> Index()
     {
-      ViewBag.teamDisplayList = await _teamsData.GetTeamsById(Guid.Parse(ClaimTypes.NameIdentifier));
+      Guid currentId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+      List<TeamDisplay> tempTeamList = await _teamsData.GetTeamsById(currentId);
+
+      ViewBag.teamDisplayList = tempTeamList;
 
       return View();
     }
