@@ -364,6 +364,7 @@ rect {
 /* Monster view team start */
 .team-view-con {
   padding: 1rem .5rem;
+  margin-bottom: .8rem;
   background-color: var(--tertaryColor);
   border-radius: var(--borderRadius);
   box-shadow: 5px 5px;

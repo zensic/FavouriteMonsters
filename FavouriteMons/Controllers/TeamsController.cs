@@ -63,9 +63,10 @@ namespace FavouriteMons.Controllers
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TeamNew teamNew)
     {
-      var result = await _teamsData.CreateTeam(teamNew);
+      teamNew.UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+      await _teamsData.CreateTeam(teamNew);
 
-      return result;
+      return Ok();
     }
   }
 }

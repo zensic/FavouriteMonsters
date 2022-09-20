@@ -169,7 +169,7 @@ const handleSubmit = () => {
     url: '/Teams/Create',
     contentType: 'application/json; charset=utf-8',
     data: JSON.stringify(TeamNew),
-    success: function (result) {
+    success: function () {
       alert('Successfully received Data');
       window.location.href = '/Teams/Index';
     },
